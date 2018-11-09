@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-/* 1701번 Cubeditor */
+/* 3640번 제독 */
 
 public class Main {
 
