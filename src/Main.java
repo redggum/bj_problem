@@ -4,82 +4,66 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-/* 1658번 돼지 잡기 */
+/* 1507번 궁금한 민호 */
 
 public class Main {
 
-
 	public static void main(String[] args) throws IOException {
+		int N;
+		int[][] noRoad;
+		String[] line;
+		int[][] edge;
+		int sum = 0;
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		int M, N;
-		int maxSoldPigsCnt = 0;
-
-		M = Integer.parseInt(st.nextToken());	// pigpen
-		N = Integer.parseInt(st.nextToken());	// customer
+		N = Integer.parseInt(br.readLine());
 		
-		int[] pigCnt = new int[M];
-		int[] pigWantCnt = new int[M];
-		int[] pmPigCnt = new int[M];
-		int[][] customerInput = new int[N][M + 2];
-		
-		String[] strs = br.readLine().split(" ");
-		
-		for (int i = 0; i < M; i++) {
-			pigCnt[i] = Integer.parseInt(strs[i]);
-		}		
+		noRoad = new int[N][N];
+		edge = new int[N][N];
 		
 		for (int i = 0; i < N; i++) {
-			strs = br.readLine().split(" ");
+			line = br.readLine().split(" ");
 			
-			customerInput[i][0] = Integer.parseInt(strs[0]);
-			customerInput[i][customerInput[i][0] + 1] = Integer.parseInt(strs[customerInput[i][0] + 1]);
-			
-			for (int j = 1; j <= customerInput[i][0]; j++) {
-				customerInput[i][j] = Integer.parseInt(strs[j]);
-				pigWantCnt[customerInput[i][j] - 1] += customerInput[i][customerInput[i][0] + 1];
+			for (int j = 0; j < N; j++) {
+				edge[i][j] = Integer.parseInt(line[j]);
 			}
 		}
 		
-		for (int i = 0; i < M; i++) {
-			pmPigCnt[i] = pigCnt[i] - pigWantCnt[i];
-		}
-		
-		int calc = 0;
-		
-		for (int i = 0; i < N; i++) {
-			for (int j = 1; j <= customerInput[i][0]; j++) {
-				calc = pigCnt[i] - customerInput[i][j];
-				
-				if (calc >= 0) {
-					pigCnt[i] -= customerInput[i][j];
-				} else {
-					pmPigCnt[i] -= calc;
-					pigCnt[i] = 0;
+		for (int k = 0; k < N; k++) {
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < N; j++) {
+//					System.out.println("edge[" + i + "][" + j + "] : " + edge[i][j] + 
+//							", edge[" + i + "][" + k + "] : " + edge[i][k] + 
+//							", edge[" + k + "][" + j + "] : " + edge[k][j]);
+					
+					if (i == j || j == k || k == i) {
+						continue;
+					}
+					
+					if (edge[i][j] > edge[i][k] + edge[k][j]) {
+						System.out.println("-1");
+						return;
+					}
+					
+					if (noRoad[i][j] == 0 && edge[i][j] == edge[i][k] + edge[k][j]) {
+//						System.out.println("get i : " + i + ", j : " + j);
+						noRoad[i][j] = 1;
+					}
 				}
 			}
 		}
-	
-	}
-
-	static void calcPI(String pattern) {
-		char[] p = pattern.toCharArray();
-//		System.out.println(p);
-
-		int j = 0;
-
-		for (int i = 1; i < pattern.length(); i++) {
-			while (j > 0 && p[j] != p[i]) {
-				j = pi[j - 1];
-			}
-
-			if (p[j] == p[i]) {
-				pi[i] = ++j;
-
-				max = (max < pi[i]) ? pi[i] : max;
+		
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+//				System.out.println("noRoad[" + i + "][" + j + "] : " + noRoad[i][j]);
+				if (noRoad[i][j] == 0) {
+//					System.out.println("result i : " + i + ", j : " + j + ", edge : " + edge[i][j]);
+					sum += edge[i][j];
+				}
 			}
 		}
+		
+		System.out.println(sum / 2);
 	}
-
 }
