@@ -1,70 +1,127 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.PriorityQueue;
 
-/* 1507번 궁금한 민호 */
+/* 10715번 JOI공원 */
 
 public class Main {
 
+	static int N, M, C;
 	
 	public static void main(String[] args) throws IOException {
-		int N;
-		int[][] noRoad;
-		String[] line;
-		int[][] edge;
-		int sum = 0;
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] strs = br.readLine().split(" ");
+		int s, e, d;
+		PriorityQueue<Node> pq = new PriorityQueue<Node>();
+		Node node;
+		int v;
+		int[] dist;
+		int nextV;
+		int adj;
+		long sum = 0;
+		long result = 0;
+		long calc = 0;
+		boolean[] check;
 		
-		N = Integer.parseInt(br.readLine());
+		N = Integer.parseInt(strs[0]);
+		M = Integer.parseInt(strs[1]);
+		C = Integer.parseInt(strs[2]);
 		
-		noRoad = new int[N][N];
-		edge = new int[N][N];
+		ArrayList<ArrayList<Adj>> al = new ArrayList<ArrayList<Adj>>();
+		dist = new int[N];
+		check = new boolean[N];
+		
+		Arrays.fill(dist, Integer.MAX_VALUE);
+		dist[0] = 0;
 		
 		for (int i = 0; i < N; i++) {
-			line = br.readLine().split(" ");
+			al.add(new ArrayList<Adj>());
+		}
+		
+		for (int i = 0; i < M; i++) {
+			strs = br.readLine().split(" ");
 			
-			for (int j = 0; j < N; j++) {
-				edge[i][j] = Integer.parseInt(line[j]);
-			}
+			s = Integer.parseInt(strs[0]);
+			e = Integer.parseInt(strs[1]);
+			d = Integer.parseInt(strs[2]);
+			
+			al.get(s - 1).add(new Adj(e, d));
+			al.get(e - 1).add(new Adj(s, d));
+			sum += d;
 		}
 		
-		for (int k = 0; k < N; k++) {
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N; j++) {
-//					System.out.println("edge[" + i + "][" + j + "] : " + edge[i][j] + 
-//							", edge[" + i + "][" + k + "] : " + edge[i][k] + 
-//							", edge[" + k + "][" + j + "] : " + edge[k][j]);
+		result = sum;
+		
+		pq.add(new Node(1, 0));
+		
+		while(!pq.isEmpty()) {
+			node = pq.poll();
+			v = node.v;
+			
+			if (check[v - 1]) {
+				continue;
+			}
+			
+			check[v - 1] = true;
+			
+//			System.out.println("pulled v : " + v);
+			
+			for(int i = 0; i < al.get(v - 1).size(); i++) {
+				nextV = al.get(v - 1).get(i).v;
+				adj = al.get(v - 1).get(i).adj;
+				
+				if (check[nextV - 1]) {
+					sum -= adj;
+					continue;
+				}
+				
+				if (dist[nextV - 1] == Integer.MAX_VALUE || dist[v - 1] + adj < dist[nextV - 1]) {
+					dist[nextV - 1] = dist[v - 1] + adj;
 					
-					if (i == j || j == k || k == i) {
-						continue;
-					}
+//					System.out.println("queue add : dist[" + (nextV - 1) + "] : " + dist[nextV - 1]);
 					
-					if (edge[i][j] > edge[i][k] + edge[k][j]) {
-						System.out.println("-1");
-						return;
-					}
-					
-					if (noRoad[i][j] == 0 && edge[i][j] == edge[i][k] + edge[k][j]) {
-//						System.out.println("get i : " + i + ", j : " + j);
-						noRoad[i][j] = 1;
-					}
+					pq.add(new Node(nextV, dist[nextV - 1]));
 				}
 			}
-		}
-		
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-//				System.out.println("noRoad[" + i + "][" + j + "] : " + noRoad[i][j]);
-				if (noRoad[i][j] == 0) {
-//					System.out.println("result i : " + i + ", j : " + j + ", edge : " + edge[i][j]);
-					sum += edge[i][j];
-				}
+			
+			calc = C * dist[v - 1] + sum;
+			
+//			System.out.println("calc : " + calc + ", C : " + C + ", dist[" + (v - 1) + "] : " + dist[v - 1] + ", sum : " + sum);
+			
+			if (result > calc) {
+				result = calc;
 			}
 		}
 		
-		System.out.println(sum / 2);
+		System.out.println(result);
+	}
+}
+
+class Adj {
+	int v;
+	int adj;
+	
+	Adj(int v, int adj) {
+		this.v = v;
+		this.adj = adj;
+	}
+}
+
+class Node implements Comparable<Node> {
+	int v;
+	int dist;
+	
+	Node(int v, int dist) {
+		this.v = v;
+		this.dist = dist;
+	}
+
+	@Override
+	public int compareTo(Node o) {
+		return this.dist >= o.dist ? 1 : -1;
 	}
 }
