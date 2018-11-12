@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-/* 10715번 JOI공원 */
+/* 1506번 경찰서 */
 
 public class Main {
 
