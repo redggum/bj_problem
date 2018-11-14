@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
-/* 1506번 경찰서 */
+/* 1574번 룩 어택 */
 
 public class Main {
 
