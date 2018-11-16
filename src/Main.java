@@ -2,11 +2,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1412번 일방통행 */
+/* 1763번 트리 색칠 */
 
 public class Main {
 
-	static int N;	// 1 <= N <= 100
+	static int N, R;	// 1 <= N <= 1,000   1 <= R <= N
 	static boolean[][] adj;
 	static int[] visited;
 	
