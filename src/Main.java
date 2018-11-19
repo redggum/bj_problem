@@ -6,7 +6,10 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static int x, y, w, h;	// 
+	static int x;	// 1 <= x <= w - 1 
+	static int y;	// 1 <= y <= h - 1
+	static int w;	// w <= 1,000
+	static int h;	// h <= 1,000
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -19,27 +22,14 @@ public class Main {
 		w = Integer.parseInt(strs[2]);
 		h = Integer.parseInt(strs[3]);
 		
-	}
-
-	public static int calcSetCnt(int inputNum) {
-		String str = String.valueOf(inputNum);
-		int[] numCnt = new int[10];
-		int num = 0;
-		int maxCnt = 0;
 		
-		for (int i = 0; i < str.length(); i++) {
-			num = str.charAt(i) - '0';
-			numCnt[num] += 1;
-		}
+		int min = 1000;
 		
-		int mid = (numCnt[6] + numCnt[9]) / 2 + (numCnt[6] + numCnt[9]) % 2;
-		numCnt[6] = mid;
-		numCnt[9] = mid;
+		if (min > x) min = x;
+		if (min > y) min = y;
+		if (min > (w - x)) min = w - x;
+		if (min > (h - y)) min = h - y;
 		
-		for (int i = 0; i < 10; i++) {
-			maxCnt = maxCnt < numCnt[i] ? numCnt[i] : maxCnt;  
-		}
-		
-		return maxCnt;
+		System.out.println(min);
 	}
 }
