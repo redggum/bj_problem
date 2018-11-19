@@ -2,21 +2,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1475번 방 번호 */
+/* 1085번 직사각형에서 탈출 */
 
 public class Main {
 
-	static int N;	// 0 <= N <= 1,000,000
-	static int s, b; // small, big
-	
+	static int x, y, w, h;	// 
 	
 	public static void main(String[] args) throws IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		N = Integer.parseInt(br.readLine());
+		String[] strs = br.readLine().split(" ");
 		
-		System.out.println(calcSetCnt(N));
+		x = Integer.parseInt(strs[0]);
+		y = Integer.parseInt(strs[1]);
+		w = Integer.parseInt(strs[2]);
+		h = Integer.parseInt(strs[3]);
+		
 	}
 
 	public static int calcSetCnt(int inputNum) {
