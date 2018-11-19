@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1085번 직사각형에서 탈출 */
+/* 1094번 막대기 */
 
 public class Main {
 
