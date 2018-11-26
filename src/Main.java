@@ -2,34 +2,57 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1094번 막대기 */
+/* 1037번 약수 */
 
 public class Main {
 
-	static int x;	// 1 <= x <= w - 1 
-	static int y;	// 1 <= y <= h - 1
-	static int w;	// w <= 1,000
-	static int h;	// h <= 1,000
+	static int N;	// N <= 50 
+	static int[] v;
+	static int gcd_val = 0;
+	static int lcm_val = 0;
+	static int max = 0;
 	
 	public static void main(String[] args) throws IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] strs;
 		
-		String[] strs = br.readLine().split(" ");
+		N = Integer.parseInt(br.readLine());
+		strs = br.readLine().split(" ");
+		v = new int[N];
 		
-		x = Integer.parseInt(strs[0]);
-		y = Integer.parseInt(strs[1]);
-		w = Integer.parseInt(strs[2]);
-		h = Integer.parseInt(strs[3]);
+		// lcm(a, b) = a x b / gcd(a, b)
+		for (int i = 0; i < N; i++) {
+			v[i] = Integer.parseInt(strs[i]);
+//			System.out.println(v[i]);
+			
+			if (max < v[i]) {
+				max = v[i];
+			}
+		}
 		
+		for (int i = 0; i < N - 1; i++) {
+			lcm_val = v[i] * v[i + 1] / (gcd_val = gcd(v[i], v[i + 1]));
+			
+			v[i + 1] = lcm_val;
+			
+//			System.out.println(gcd_val + " " + v[i + 1]);
+		}
 		
-		int min = 1000;
+		if (v[N - 1] <= max) {
+			v[N - 1] *= 2;
+		}
 		
-		if (min > x) min = x;
-		if (min > y) min = y;
-		if (min > (w - x)) min = w - x;
-		if (min > (h - y)) min = h - y;
+		System.out.println(v[N - 1]);
+	}
+	
+	static int gcd(int a, int b) {
+		int rem = a % b;
 		
-		System.out.println(min);
+		if (rem == 0) {
+			return b;
+		}
+		
+		return gcd (b, rem);
 	}
 }
