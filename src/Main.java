@@ -7,8 +7,10 @@ import java.io.InputStreamReader;
 public class Main {
 
 	static int M, N;	// 1 ≤ M <= N ≤ 10,000
-	static final int SUM = 0;
-	static final int MIN = Integer.MAX_VALUE;
+	static int SUM = 0;
+	static int MIN = Integer.MAX_VALUE;
+	static int from = 0;
+	static int to = 0;
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -17,7 +19,26 @@ public class Main {
 		M = Integer.parseInt(br.readLine());
 		N = Integer.parseInt(br.readLine());
 
-		System.out.println(SUM);
-		System.out.println(MIN);
+		from = (int) Math.sqrt(M);
+		to = (int) Math.sqrt(N);
+		
+		int val = 0;
+		
+		for (int i = from; i <= to; i++) {
+			val = i * i;
+			if (val >= M) {
+				SUM += val;
+				if (MIN > val) {
+					MIN = val;
+				}
+			}
+		}
+		
+		if (SUM > 0) {
+			System.out.println(SUM);
+			System.out.println(MIN);
+		} else {
+			System.out.println(-1);
+		}
 	}
 }
