@@ -2,57 +2,39 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1037번 약수 */
+/* 1476번 날짜 계산 */
 
 public class Main {
 
-	static int N;	// N <= 50 
-	static int[] v;
-	static int gcd_val = 0;
-	static int lcm_val = 0;
-	static int max = 0;
+	static int E, S, M;	// 1 ≤ E ≤ 15, 1 ≤ S ≤ 28, 1 ≤ M ≤ 19
+	static final int E_MOD = 15;
+	static final int S_MOD = 28;
+	static final int M_MOD = 19;
+	static int year = 0;
 	
 	public static void main(String[] args) throws IOException {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] strs;
 		
-		N = Integer.parseInt(br.readLine());
 		strs = br.readLine().split(" ");
-		v = new int[N];
+		E = Integer.parseInt(strs[0]);
+		S = Integer.parseInt(strs[1]);
+		M = Integer.parseInt(strs[2]);
+
+		year = E;
 		
-		// lcm(a, b) = a x b / gcd(a, b)
-		for (int i = 0; i < N; i++) {
-			v[i] = Integer.parseInt(strs[i]);
-//			System.out.println(v[i]);
-			
-			if (max < v[i]) {
-				max = v[i];
+		while(true) {
+//			System.out.println("year : " + year);
+			if ( ((year % S_MOD == S) || (year % S_MOD == 0 && S_MOD == S)) && 
+					(year % M_MOD == M || (year % M_MOD == 0 && M_MOD == M)) ) {
+//				System.out.println("Find!!");
+				break;
 			}
-		}
-		
-		for (int i = 0; i < N - 1; i++) {
-			lcm_val = v[i] * v[i + 1] / (gcd_val = gcd(v[i], v[i + 1]));
 			
-			v[i + 1] = lcm_val;
-			
-//			System.out.println(gcd_val + " " + v[i + 1]);
+			year += E_MOD;
 		}
 		
-		if (v[N - 1] <= max) {
-			v[N - 1] *= 2;
-		}
-		
-		System.out.println(v[N - 1]);
-	}
-	
-	static int gcd(int a, int b) {
-		int rem = a % b;
-		
-		if (rem == 0) {
-			return b;
-		}
-		
-		return gcd (b, rem);
+		System.out.println(year);
 	}
 }
