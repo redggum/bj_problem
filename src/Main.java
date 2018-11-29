@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1977번 완전제곱수 */
+/* 1076번 저항 */
 
 public class Main {
 
