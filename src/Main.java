@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 /* 1076번 저항 */
 
@@ -16,29 +18,37 @@ public class Main {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		M = Integer.parseInt(br.readLine());
-		N = Integer.parseInt(br.readLine());
+		String one = br.readLine();
+		String two = br.readLine();
+		String three = br.readLine();
 
-		from = (int) Math.sqrt(M);
-		to = (int) Math.sqrt(N);
+		Map<String, String> resist12 = new HashMap<String, String>();
 		
-		int val = 0;
+		resist12.put("black", "0");
+		resist12.put("brown", "1");
+		resist12.put("red", "2");
+		resist12.put("orange", "3");
+		resist12.put("yellow", "4");
+		resist12.put("green", "5");
+		resist12.put("blue", "6");
+		resist12.put("violet", "7");
+		resist12.put("grey", "8");
+		resist12.put("white", "9");
+	
+		Map<String, String> resist3 = new HashMap<String, String>();
 		
-		for (int i = from; i <= to; i++) {
-			val = i * i;
-			if (val >= M) {
-				SUM += val;
-				if (MIN > val) {
-					MIN = val;
-				}
-			}
-		}
+		resist3.put("black", "");
+		resist3.put("brown", "0");
+		resist3.put("red", "00");
+		resist3.put("orange", "000");
+		resist3.put("yellow", "0000");
+		resist3.put("green", "00000");
+		resist3.put("blue", "000000");
+		resist3.put("violet", "0000000");
+		resist3.put("grey", "00000000");
+		resist3.put("white", "000000000");
 		
-		if (SUM > 0) {
-			System.out.println(SUM);
-			System.out.println(MIN);
-		} else {
-			System.out.println(-1);
-		}
+		System.out.println(Long.parseLong(resist12.get(one) + resist12.get(two) + resist3.get(three)));
+	
 	}
 }
