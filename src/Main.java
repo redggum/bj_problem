@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 2869번 달팽이는 올라가고 싶다 */
+/* 1652번 누울 자리를 찾아라 */
 
 public class Main {
 
