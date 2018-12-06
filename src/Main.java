@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static int A, B, C;	// 0 < A < B < C < 100
+	static int A, I;	// 1 <= A, I <= 100
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -15,9 +15,8 @@ public class Main {
 		String[] strs = br.readLine().split(" ");
 		
 		A = Integer.parseInt(strs[0]);
-		B = Integer.parseInt(strs[1]);
-		C = Integer.parseInt(strs[2]);
+		I = Integer.parseInt(strs[1]);
 		
-		System.out.println(B - A - 1 > C - B - 1 ? B - A - 1 : C - B - 1);
+		System.out.println(A * (I - 1) + 1);
 	}
 }
