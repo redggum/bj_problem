@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 2965번 캥거루 세마리 */
+/* 2914번 저작권 */
 
 public class Main {
 
