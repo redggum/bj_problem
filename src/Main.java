@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static int A, I;	// 1 <= A, I <= 100
+	static long A, B, V;	// 1 <= B < A <= V <= 1,000,000,000
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -14,9 +14,14 @@ public class Main {
 		
 		String[] strs = br.readLine().split(" ");
 		
-		A = Integer.parseInt(strs[0]);
-		I = Integer.parseInt(strs[1]);
+		A = Long.parseLong(strs[0]);
+		B = Long.parseLong(strs[1]);
+		V = Long.parseLong(strs[2]);
 		
-		System.out.println(A * (I - 1) + 1);
+		long reminder = (V - A) % (A - B);
+		
+		long plus = (reminder > 0 ? 2 : 1);
+		
+		System.out.println((V - A) / (A - B) + plus);
 	}
 }
