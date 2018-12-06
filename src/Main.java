@@ -2,14 +2,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1057번 토너먼트 */
+/* 2965번 캥거루 세마리 */
 
 public class Main {
 
-	static int N;	// 1 ≤ M <= N ≤ 100,000
-	static int KIM;
-	static int IM;
-	static int final_round = 0;
+	static int A, B, C;	// 0 < A < B < C < 100
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -17,16 +14,10 @@ public class Main {
 		
 		String[] strs = br.readLine().split(" ");
 		
-		N = Integer.parseInt(strs[0]);
-		KIM = Integer.parseInt(strs[1]);
-		IM = Integer.parseInt(strs[2]);
+		A = Integer.parseInt(strs[0]);
+		B = Integer.parseInt(strs[1]);
+		C = Integer.parseInt(strs[2]);
 		
-		while(KIM != IM) {
-			KIM = KIM / 2 + KIM % 2;
-			IM = IM / 2 + IM % 2;
-			final_round++;
-		}
-		
-		System.out.println(final_round);
+		System.out.println(B - A - 1 > C - B - 1 ? B - A - 1 : C - B - 1);
 	}
 }
