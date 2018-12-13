@@ -2,30 +2,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1075번 나누기 */
+/* 2864번 5와 6의 차이 */
 
 public class Main {
 
-	static long N, F; // 100 <= N <= 2,000,000,000, 1 <= F <= 100
-	static long s;
-	static long v;
+	static long A, B; // A, B <= 1,000,000
+	static long minA, minB, maxA, maxB;
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] strs = br.readLine().split(" ");
+		A = Long.parseLong(strs[0]);
+		B = Long.parseLong(strs[1]);
 
-		N = Long.parseLong(br.readLine());
-		F = Long.parseLong(br.readLine());
+		String str1 = String.valueOf(A);
+		String str2 = String.valueOf(B);
+
+		minA = Long.parseLong(str1.replaceAll("6", "5"));
+		minB = Long.parseLong(str2.replaceAll("6", "5"));
+
+		maxA = Long.parseLong(str1.replaceAll("5", "6"));
+		maxB = Long.parseLong(str2.replaceAll("5", "6"));
 		
-		s = (N / 100) * 100;
-		
-		for (v = s; v < s + 100; v++) {
-			if (v % F == 0) {
-				break;
-			}
-		}
-		
-		String str = String.valueOf(v);
-		System.out.println(str.substring(str.length() - 2, str.length()));
+		System.out.println((minA + minB) + " " + (maxA + maxB));
 	}
 }
