@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1789번 수들의 합 */
+/* 1904번 01타일 */
 
 public class Main {
 
