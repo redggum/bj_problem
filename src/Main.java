@@ -1,105 +1,54 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
-/* 1652번 누울 자리를 찾아라 */
+/* 1074번 Z */
 
 public class Main {
 
-	static int N;	// 1 <= N <= 100
-	static char[][] arr;
-	static int cnt;
-	static int len;
-	static char ch;
-	static int x, y;
-	static boolean trigger;
-	
+	static int N, r, c; // 1 <= N <= 15, 0 <= r, c <= 2^N-1
+	static int n;
+	static int[] X = { 0, 1, 0, 1 };
+	static int[] Y = { 0, 0, 1, 1 };
+
 	public static void main(String[] args) throws IOException {
-		
+
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] strs = null;
-		
-		N = Integer.parseInt(br.readLine());
-		
-		arr = new char[N + 1][N + 1];
-		cnt = 0;
-		x = 0;
-		y = 0;
-		
-		
-		for (int i = 1; i <= N; i++) {
-			strs = br.readLine().split("");
-			
-			for (int j = 1; j <= N; j++) {
-				ch = strs[j - 1].charAt(0);
-				arr[i][j] = ch;
-			}
-		}
-		
-		x = cnt;
-		cnt = 0;
-		
-		System.out.println(xy_calc() + " " + yx_calc());
+
+		strs = br.readLine().split(" ");
+		N = Integer.parseInt(strs[0]);
+		r = Integer.parseInt(strs[1]);
+		c = Integer.parseInt(strs[2]);
+
+		n = (int) Math.pow(2, N);
+//		System.out.println(n);
+
+		System.out.println(move(r, c) - 1);
 	}
-	
-	static int xy_calc() {
-		int cnt = 0;
-		char ch;
-		
-		for (int i = 1; i <= N; i++) {		
-			len = 0;
-			ch = 0;
-			trigger = false;
-			
-			for (int j = 1; j <= N; j++) {
-				ch = arr[i][j];
-				if (ch == '.') {
-					 if (trigger == false) {
-						 len++;
-					 }
-				} else {
-					len = 0;
-					trigger = false;
-				}
-				
-				if (len == 2 && trigger == false) {
+
+	public static long move(int row, int col) {
+		int size = n;
+		int nextRow = 0;
+		int nextCol = 0;
+		long cnt = 0;
+
+		for (int y = 0; y < size; y += 2) {
+			for (int x = 0; x < size; x += 2) {
+				for (int z = 0; z < 4; z++) {
+					nextRow = y + Y[z];
+					nextCol = x + X[z];
 					cnt++;
-					trigger = true;
+
+//					System.out.println("nextRow : " + nextRow + ", nextCol : " + nextCol + ", cnt : " + cnt);
+
+					if (nextRow == row && nextCol == col) {
+						return cnt;
+					}
 				}
 			}
 		}
-		
-		return cnt;
-	}
-	
-	static int yx_calc() {
-		int cnt = 0;
-		char ch;
-	
-		for (int i = 1; i <= N; i++) {		
-			len = 0;
-			ch = 0;
-			trigger = false;
-			
-			for (int j = 1; j <= N; j++) {
-				ch = arr[j][i];
-				if (ch == '.') {
-					 if (trigger == false) {
-						 len++;
-					 }
-				} else {
-					len = 0;
-					trigger = false;
-				}
-				
-				if (len == 2 && trigger == false) {
-					cnt++;
-					trigger = true;
-				}
-			}
-		}
-		
+
 		return cnt;
 	}
 }
