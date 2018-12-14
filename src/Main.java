@@ -6,27 +6,25 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static long S; // 1 ≤ S ≤ 4,294,967,295
-	static long sub = 1;
-	static long cnt = 0;
+	static int N;	// N <= 1,000,000
+	static long DIV = 15746;
+	static long sum = 0;
+	static long[] D;
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		S = Long.parseLong(br.readLine());
+		N = Integer.parseInt(br.readLine());
+		D = new long[1000000 + 1];
 		
-		if (S == 1) {
-			System.out.println(1);
-			return;
-		}
-
-		while (S - sub > 0) {
-			S -= sub;
-			cnt++;
-			sub++;
+		D[1] = 1;
+		D[2] = 2;
+		
+		for (int i = 3; i <= N; i++) {
+				D[i] = (D[i-1] + D[i - 2]) % DIV;
 		}
 		
-		System.out.println(cnt);
+		System.out.println(D[N]);
 	}
 }
