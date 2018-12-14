@@ -2,11 +2,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1904번 01타일 */
+/* 1357번 뒤집힌 덧셈 */
 
 public class Main {
 
-	static int N;	// N <= 1,000,000
+	static int X, Y;	// X, Y <= 1,000
 	static long DIV = 15746;
 	static long sum = 0;
 	static long[] D;
@@ -14,17 +14,30 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] strs = br.readLine().split(" ");
+		
+		X = Integer.parseInt(strs[0]);
+		Y = Integer.parseInt(strs[1]);
+		
+		System.out.println(Rev(Rev(X) + Rev(Y)));
+	}
+	
+	static int Rev(int frd) {
+		String[] strs = String.valueOf(frd).split("");
+		String tmp;
+		String ret = "";
+		int len = strs.length;
+		for (int i = 0; i < len / 2; i++) {
+			tmp = strs[i];
+			strs[i] = strs[len - 1 - i];
+			strs[len - 1 - i] = tmp;
+		}
 
-		N = Integer.parseInt(br.readLine());
-		D = new long[1000000 + 1];
-		
-		D[1] = 1;
-		D[2] = 2;
-		
-		for (int i = 3; i <= N; i++) {
-				D[i] = (D[i-1] + D[i - 2]) % DIV;
+		for (int i = 0; i < len; i++) {
+			ret += strs[i];
 		}
 		
-		System.out.println(D[N]);
+		return Integer.parseInt(ret);
 	}
+	
 }
