@@ -6,17 +6,28 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static long N;	// 1 <= N <= 10,000,000
+	static int N;	// 1 <= N <= 10,000,000
+	static int[] D;
+	static int DIV = 45678;
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String[] strs = br.readLine().split(" ");
+
+		N = Integer.parseInt(br.readLine());
 		
-		A = Long.parseLong(strs[0]);
-		B = Long.parseLong(strs[1]);
-		C = Long.parseLong(strs[2]);
+		D = new int[N + 1];
 		
+		D[0] = 1;
+		//D[1] = D[0] + 4 + 3 * 0;
+		//D[2] = D[1] + 4 + 3 * 1;
+		//D[3] = D[2] + 4 + 3 * 2;
+		//D[4] = D[3] + 4 + 3 * 3;
 		
+		for (int i = 1; i <= N; i++) {
+			D[i] = (D[i -1] + 4 + 3 * (i - 1)) % DIV;
+		}
+		
+		System.out.println(D[N]);
 	}
 }
