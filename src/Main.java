@@ -2,20 +2,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1834번 나머지와 몫이 같은 수 */
+/* 2355번 시그마 */
 
 public class Main {
 
-	static long N;	// 1 <= N <= 2,000,000
-	static long in = 0;
+	static long A = 0;	// -2,147,483,648 ≤ A, B ≤ 2,147,483,647
+	static long B = 0;	// -2,147,483,648 ≤ A, B ≤ 2,147,483,647
 	static long sum = 0;
 	
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		N = Long.parseLong(br.readLine());
-		
+		String[] strs = br.readLine().split(" ");
+		A = Long.parseLong(strs[0]);
+		B = Long.parseLong(strs[1]);
 		
 //		in / N = in % N
 		
