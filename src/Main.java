@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 2355번 시그마 */
+/* 1024번 수열의 합 */
 
 public class Main {
 
