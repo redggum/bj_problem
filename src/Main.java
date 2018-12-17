@@ -6,38 +6,47 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static int N = 0;	// N <= 1,000,000,000
-	static int L = 0;	// 2 <= L <= 100
+	static int n = 0;	// 2 < n < 100,000
 	static int val = 0;
-	static int start = 0; 
+	static int start = 0;
+	static int sum = 0;
+	static String result = "";
+	static int cnt = 0;
 	
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		String[] strs = br.readLine().split(" ");
-		N = Integer.parseInt(strs[0]);
-		L = Integer.parseInt(strs[1]);
-
-		// 합이 N이면서, 길이가 적어도 L이면서 가장 짧은 연속된 음이 아닌 정수 리스트
-		for (int i = L; i <= 100; i++) {
-			val = (N - (i - 1) * i / 2);
+		while(true) {
+			n = Integer.parseInt(br.readLine());
 			
-			if (val < 0) {
-				continue;
+			if (n == -1) {
+				break;
 			}
 			
-			if (val % i == 0) {
-				start =  val / i;
-				
-				for (int j = 0; j < i; j++) {
-					System.out.print((start + j) + " ");
+			sum = 0;
+			result = n + " = ";
+			cnt = 0;
+			
+			for (int i = 1; i < n; i++) {
+				if (n % i == 0) {
+					sum += i;
+					if (cnt == 0) {
+						result += i;
+					} else {
+						result += " + " + i;
+					}
+					cnt++;
 				}
-				
-				return;
 			}
+			
+			if (sum != n) {
+				System.out.println(n + " is NOT perfect.");
+			} else {
+				System.out.println(result);
+			}
+			
 		}
-		
-		System.out.println(-1);
+
 	}
 }
