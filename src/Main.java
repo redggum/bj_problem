@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 9506번 약수들의 합 */
+/* 2921번 도미노 */
 
 public class Main {
 
