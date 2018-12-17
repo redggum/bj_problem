@@ -6,37 +6,38 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static long A = 0;	// -2,147,483,648 ≤ A, B ≤ 2,147,483,647
-	static long B = 0;	// -2,147,483,648 ≤ A, B ≤ 2,147,483,647
-	static long sum = 0;
+	static int N = 0;	// N <= 1,000,000,000
+	static int L = 0;	// 2 <= L <= 100
+	static int val = 0;
+	static int start = 0; 
 	
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		String[] strs = br.readLine().split(" ");
-		A = Long.parseLong(strs[0]);
-		B = Long.parseLong(strs[1]);
-		
-		
-		// guess B >= A
-		if (A > B) {
-			long tmp = A;
-			A = B;
-			B = tmp;
+		N = Integer.parseInt(strs[0]);
+		L = Integer.parseInt(strs[1]);
+
+		// 합이 N이면서, 길이가 적어도 L이면서 가장 짧은 연속된 음이 아닌 정수 리스트
+		for (int i = L; i <= 100; i++) {
+			val = (N - (i - 1) * i / 2);
+			
+			if (val < 0) {
+				continue;
+			}
+			
+			if (val % i == 0) {
+				start =  val / i;
+				
+				for (int j = 0; j < i; j++) {
+					System.out.print((start + j) + " ");
+				}
+				
+				return;
+			}
 		}
 		
-//		if (A >= 0 && B >= 0) {
-			
-			sum = (B * (B + 1) / 2) - (A * (A - 1) / 2);
-			
-//		} else if (A < 0 && B >= 0) {
-//			sum = (B * (B + 1) / 2) + (A * (A - 1) / 2);
-//			
-//		} else {	// A < 0 && B < 0
-//			sum = (A * (A - 1) / 2) + (B * (B + 1) / 2);
-//		}
-		
-		System.out.println(sum);
+		System.out.println(-1);
 	}
 }
