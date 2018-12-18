@@ -6,24 +6,30 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static int T = 0; // 1 <= T < 100
-	static int V, E = 0; // 4 <= V, E <= 100
-
-	// V - E + S (surface) = 2
+	static int A, B, C = 0; // 5 <= A < 1000, 1 <= B <= 99, 2 <= C <= 100, C > B
+	static int H, W = 0;
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		T = Integer.parseInt(br.readLine());
+		String[] strs = br.readLine().split(" ");
 
-		for (int tc = 1; tc <= T; tc++) {
-			String[] strs = br.readLine().split(" ");
+		A = Integer.parseInt(strs[0]); // 대각선
+		B = Integer.parseInt(strs[1]); // 높이 비율
+		C = Integer.parseInt(strs[2]); // 너비 비율
 
-			V = Integer.parseInt(strs[0]);
-			E = Integer.parseInt(strs[1]);
+		// H^2 + W^2 = A^2
+		// B : C = H : W -> C * H = B * W
+		// H = Bx, W = Cx
+		// Bx^2 + Cx^2 = A^2
+		// B^2 * x^2 + C^2 * x^2 = A^2
+		// (B^2 + C^2) * x^2 = A^2
 
-			System.out.println(2 - V + E);
-		}
+		double tmp = Math.pow((double) A, 2) / (Math.pow((double) B, 2) + Math.pow((double) C, 2));
+
+		tmp = Math.sqrt(tmp);
+		
+		System.out.println((int) (B * tmp) + " " + (int) (C * tmp));
 	}
 }
