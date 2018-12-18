@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 10569번 다면체 */
+/* 1297번 TV 크기 */
 
 public class Main {
 
