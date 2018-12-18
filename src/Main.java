@@ -6,25 +6,24 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static int N = 0;	// 1 <= N < 1000
-	static int sum = 0;
+	static int T = 0; // 1 <= T < 100
+	static int V, E = 0; // 4 <= V, E <= 100
+
+	// V - E + S (surface) = 2
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		N = Integer.parseInt(br.readLine());
-		
-		for (int i = 0; i <= N; i++) {
-			for (int j = 0; j <= N; j++) {
-				if (i != j) {
-					sum += (i + j);
-				}
-			}
+
+		T = Integer.parseInt(br.readLine());
+
+		for (int tc = 1; tc <= T; tc++) {
+			String[] strs = br.readLine().split(" ");
+
+			V = Integer.parseInt(strs[0]);
+			E = Integer.parseInt(strs[1]);
+
+			System.out.println(2 - V + E);
 		}
-		
-		sum /= 2;
-		
-		System.out.println(N * (N + 1) + sum);
 	}
 }
