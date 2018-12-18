@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 2921번 도미노 */
+/* 10569번 다면체 */
 
 public class Main {
 
