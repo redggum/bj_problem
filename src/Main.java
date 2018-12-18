@@ -6,47 +6,25 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-	static int n = 0;	// 2 < n < 100,000
-	static int val = 0;
-	static int start = 0;
+	static int N = 0;	// 1 <= N < 1000
 	static int sum = 0;
-	static String result = "";
-	static int cnt = 0;
-	
+
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		while(true) {
-			n = Integer.parseInt(br.readLine());
-			
-			if (n == -1) {
-				break;
-			}
-			
-			sum = 0;
-			result = n + " = ";
-			cnt = 0;
-			
-			for (int i = 1; i < n; i++) {
-				if (n % i == 0) {
-					sum += i;
-					if (cnt == 0) {
-						result += i;
-					} else {
-						result += " + " + i;
-					}
-					cnt++;
+		
+		N = Integer.parseInt(br.readLine());
+		
+		for (int i = 0; i <= N; i++) {
+			for (int j = 0; j <= N; j++) {
+				if (i != j) {
+					sum += (i + j);
 				}
 			}
-			
-			if (sum != n) {
-				System.out.println(n + " is NOT perfect.");
-			} else {
-				System.out.println(result);
-			}
-			
 		}
-
+		
+		sum /= 2;
+		
+		System.out.println(N * (N + 1) + sum);
 	}
 }
