@@ -9,6 +9,7 @@ public class Main {
 	static int N = 0; // nums of files -> N <= 1000
 	static int[] S;	// size of each file, S <= 1,000,000,000
 	static int C; // size of cluster, C <= 1,048,576
+	static long sum;
 
 	public static void main(String[] args) throws IOException {
 
@@ -23,6 +24,30 @@ public class Main {
 		}
 		
 		C = Integer.parseInt(br.readLine());
-
+		
+		long quotient = 0;
+		long remainder = 0;
+		
+		// 크기가 0인 파일은 클러스터가 필요없다.
+		for (int i = 1; i <= N; i++) {
+			quotient = S[i] / C;
+			remainder = S[i] % C;
+			
+			if (S[i] == 0) {
+				continue;
+			}
+			
+			if (quotient == 0) {
+				sum += C;
+			} else {	// quotient >= 1
+				if (remainder == 0) {
+					sum += (C * quotient);
+				} else {
+					sum += (C * (quotient + 1));
+				}
+			}
+		}
+		
+		System.out.println(sum);
 	}
 }
