@@ -2,52 +2,72 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1350번 진짜 공간 */
+/* 1919번 애너그램 만들기 */
 
 public class Main {
 
-	static int N = 0; // nums of files -> N <= 1000
-	static int[] S;	// size of each file, S <= 1,000,000,000
-	static int C; // size of cluster, C <= 1,048,576
-	static long sum;
+	static int[] alphabet1 = new int[26];	// <= 26
+	static int[] alphabet2 = new int[26]; // <= 26
+	
+	static int cnt_1 = 0;
+	static int cnt_2 = 0;
+	static int cnt_common = 0;
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		N = Integer.parseInt(br.readLine());
-		String[] strs = br.readLine().split(" ");
-		S = new int[N + 1];
+		String[] strs = br.readLine().split("");
+//		cnt_1 = strs.length;
+		check(strs, alphabet1);
 		
-		for (int i = 0; i < N; i++) {
-			S[i + 1] = Integer.parseInt(strs[i]); // 대각선
-		}
+		strs = br.readLine().split("");
+//		cnt_2 = strs.length;
+		check(strs, alphabet2);
 		
-		C = Integer.parseInt(br.readLine());
-		
-		long quotient = 0;
-		long remainder = 0;
-		
-		// 크기가 0인 파일은 클러스터가 필요없다.
-		for (int i = 1; i <= N; i++) {
-			quotient = S[i] / C;
-			remainder = S[i] % C;
-			
-			if (S[i] == 0) {
-				continue;
-			}
-			
-			if (quotient == 0) {
-				sum += C;
-			} else {	// quotient >= 1
-				if (remainder == 0) {
-					sum += (C * quotient);
+		for (int i = 0; i < alphabet1.length; i++) {
+//			System.out.println("alphabet1[" + i + "] : " + alphabet1[i] + ", alphabet2[" + i + "] : " + alphabet2[i]);
+			/*if (alphabet1[i] != 0 && alphabet2[i] != 0) {
+				if (alphabet1[i] != alphabet2[i]) {
+					cnt_common += Math.abs(alphabet1[i] - alphabet2[i]);
 				} else {
-					sum += (C * (quotient + 1));
+					cnt_common += alphabet1[i];
+				}
+			}*/
+			
+			if (alphabet1[i] != 0 && alphabet2[i] != 0) {
+				if (alphabet1[i] != alphabet2[i]) {
+					if (alphabet1[i] - alphabet2[i] > 0) {
+						cnt_1 += Math.abs(alphabet1[i] - alphabet2[i]);
+					} else {						
+						cnt_2 += Math.abs(alphabet1[i] - alphabet2[i]);
+					}
+				}
+			} else {
+				if (alphabet1[i] != 0 && alphabet2[i] == 0) {
+					cnt_1 += alphabet1[i]; 
+				}
+				
+				else if (alphabet1[i] == 0 && alphabet2[i] != 0) {
+					cnt_2 += alphabet2[i]; 
 				}
 			}
+		
+//			System.out.println("cnt_1 : " + cnt_1 + ", cnt_2 : " + cnt_2);
 		}
 		
-		System.out.println(sum);
+//		System.out.println("cnt_1 : " + cnt_1 + ", cnt_2 : " + cnt_2 + ", cnt_common : " + cnt_common);
+//		System.out.println((cnt_1 - cnt_common) + (cnt_2 - cnt_common));
+		System.out.println(cnt_1 + cnt_2);
+	}
+	
+	public static void check(String[] strs, int[] alphabet) {
+		int idx = 0;
+		
+		for (int i = 0; i < strs.length; i++) {
+			idx = strs[i].charAt(0) - 'a';
+//			System.out.println("idx : " + idx);
+			alphabet[idx]++;
+		}
 	}
 }
