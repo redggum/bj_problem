@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1919번 애너그램 만들기 */
+/* 2903번 중앙 이동 알고리즘 */
 
 public class Main {
 
