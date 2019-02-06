@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1712번 손익분기점 */
+/* 11006번 남욱이의 닭장 */
 
 public class Main {
 
@@ -10,32 +10,25 @@ public class Main {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] strs;
-		long A, B, C, tmpA, tmpB;
+		int T, N, M, normal, abnormal;
+		
+		T = Integer.parseInt(br.readLine());
+		
+		for (int tc = 1; tc <= T; tc++) {
+			strs = br.readLine().split(" ");
+			N = Integer.parseInt(strs[0]);
+			M = Integer.parseInt(strs[1]);
 
-		strs = br.readLine().split(" ");
-
-		A = Long.parseLong(strs[0]);
-		B = Long.parseLong(strs[1]);
-		C = Long.parseLong(strs[2]);
-
-		// A + Bn < Cn
-		// A < n (C - B)
-		// A / (C - B) < n
-		// A, B, C 는 21억 이하의 자연수
-
-		tmpA = (C - B);
-
-		if (tmpA == 0) {
-			System.out.println(-1);
-		} else {
-			tmpB = A / tmpA;
-
-			if (tmpB < 0) {
-				System.out.println(-1);
-			} else {
-				System.out.println(tmpB + 1);
-			}
+			// 2 * M = (N + K) // K -> 잃어버린 다리 개수
+			// M = (N + K) / 2
+			// K = 2M - N 
+			// abnormal = (2M - N)
+			// normal = M - abnormal
+			
+			abnormal = 2 * M - N;
+			normal = M - abnormal;
+			
+			System.out.println(abnormal + " " + normal);
 		}
-
 	}
 }
