@@ -4,30 +4,30 @@ import java.io.InputStreamReader;
 import java.sql.Array;
 import java.util.Arrays;
 
-/* 10809번 알파벳 찾기 */
+/* 2675번 문자열 반복 */
 
 public class Main {
 
-	static int[] pos = new int[26];
-	static int index = -1;
 	static String S;
+	static String[] strs;
+	static int T;
+	static int cnt;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		Arrays.fill(pos, -1);
+		T = Integer.parseInt(br.readLine());
 		
-		S = br.readLine();
-
-		for (int i = 0; i < S.length(); i++) {
-			index = S.charAt(i) - 'a';
+		for (int tc = 1; tc <= T; tc++) {
+			strs = br.readLine().split(" ");
 			
-			if (pos[index] == -1) {
-				pos[index] = i;
+			cnt = Integer.parseInt(strs[0]);
+			S = strs[1];
+			
+			for (int i = 0; i < S.length(); i++) {
+				for (int j = 0; j < cnt; j++) {
+					System.out.print(S.charAt(i));
+				}
 			}
-		}
-		
-		for (int i = 0; i < pos.length; i++) {
-			System.out.print(pos[i] + " ");
 		}
 	}
 }
