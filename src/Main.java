@@ -4,49 +4,53 @@ import java.io.InputStreamReader;
 import java.sql.Array;
 import java.util.Arrays;
 
-/* 1157번 단어 공부 */
+/* 1316번 그룹 단어 체크 */
 
 public class Main {
 
 	static String S;
 	static String[] strs;
-	static int[] freqAlphabet = new int[26];	// Upper, lower diff = 32
-	static int ascii;
-	static char max;
-	static int maxAlphabetIndex = -1;
-	static int maxCnt = 0;
+	static int[] alphabet;
+	static int T;
+	static int total = 0;
+	static boolean failed;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		S = br.readLine();
+		T = Integer.parseInt(br.readLine());
+
+		int index = 0;
 		
-		for (int i = 0; i < S.length(); i++) {
-			ascii = (int) (S.charAt(i) - 'A');
+		for (int tc = 1; tc <= T; tc++) {
+			strs = br.readLine().split("");
 			
-			if (ascii >= 32) {
-				ascii -= 32;
-			}
+			failed = false;
 			
-			freqAlphabet[ascii]++;
-//			System.out.println("ascii : " + ascii);
-		}
-		
-		for (int i = 0; i < freqAlphabet.length; i++) {
-			if (freqAlphabet[i] > 0 && freqAlphabet[i] > maxCnt) {
-				maxCnt = freqAlphabet[i];
-				max = (char) (i + (int) 'A');
-				maxAlphabetIndex = i;
+			total++;
+			alphabet = new int[26];
+			
+			for (int i = 0; i < strs.length; i++) {
+//				System.out.println("word : " + strs[i]);
+				index = strs[i].charAt(0) - 'a';
 				
-//				System.out.println("maxAlphabetIndex : " + maxAlphabetIndex);
+//				System.out.println("alphabet[" + index + "] : " + alphabet[index]);
+				
+				if (alphabet[index] == 0 || i == 0) {
+					alphabet[index] = 1;
+					continue;
+				} else {
+//					System.out.println("strs[i - 1].charAt(0) - 'a' : " + (strs[i - 1].charAt(0) - 'a'));
+					if (strs[i - 1].charAt(0) - 'a' == index) {
+						continue;
+					} else {
+						total--;
+						break;
+					}
+				}
 			}
+			
+//			System.out.println("total : " + total);
 		}
 		
-		for (int i = 0; i < freqAlphabet.length; i++) {
-			if (maxCnt == freqAlphabet[i] && maxAlphabetIndex != i) {
-				max = '?';
-				break;
-			}
-		}
-		
-		System.out.println(max);
+		System.out.println(total);
 	}
 }
