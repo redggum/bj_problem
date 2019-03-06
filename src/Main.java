@@ -2,21 +2,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 2440번 별 찍기 - 3 */
+/* 7287번 등록 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int num = Integer.parseInt(br.readLine());
-
-		for (int i = 1; i <= num; i++) {
-			for (int j = num; j >= i; j--) {
-				System.out.print('*');
-			}
-			
-			System.out.println();
-		}
+		System.out.println(103);
+		System.out.println("redggum");
 	}
 }
