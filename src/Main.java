@@ -2,20 +2,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 8393번 합 */
+/* 10172번 개 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int num = Integer.parseInt(br.readLine());
-		int sum = 0;
+//		int num = Integer.parseInt(br.readLine());
 
-		for (int i = 1; i <= num; i++) {
-			sum += i;
-		}
-		
-		System.out.println(sum);
+		System.out.println("|\\_/|");
+		System.out.println("|q p|   /}");
+		System.out.println("( 0 )\"\"\"\\");
+		System.out.println("|\"^\"`    |");
+		System.out.println("||_/=\\\\__|");
 	}
 }
