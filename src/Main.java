@@ -2,18 +2,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 10998번 AxB */
+/* 2739번 구구단 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		String[] strs = br.readLine().split(" ");
+		int num = Integer.parseInt(br.readLine());
 		
-		int a = Integer.parseInt(strs[0]);
-		int b = Integer.parseInt(strs[1]);
-
-		System.out.println(a * b);
+		for (int i = 1; i <= 9; i++) {
+			System.out.println(num + " * " + i + " = " + (num * i));
+		}
 	}
 }
