@@ -2,18 +2,27 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 1008번 A/B */
+/* 2439번 별 찍기 - 2 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		String[] strs = br.readLine().split(" ");
+		int num = Integer.parseInt(br.readLine());
+		String str;
 		
-		double a = Double.parseDouble(strs[0]);
-		double b = Double.parseDouble(strs[1]);
-		
-		System.out.println(a / b);
+		for (int i = 1; i <= num; i++) {
+			str = "";
+			
+			for (int j = 1; j <= num - i; j++) {
+				str += " ";
+			}
+			
+			for (int j = 1; j <= i; j++) {
+				str += "*";
+			}
+			System.out.println(str);
+		}
 	}
 }
