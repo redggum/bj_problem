@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 2441번 별 찍기 - 4 */
+/* 9498번 시험 성적 */
 
 public class Main {
 
@@ -10,16 +10,17 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		int num = Integer.parseInt(br.readLine());
-		
-		for (int i = 1; i <= num; i++) {
-			String str = "";
-			for (int j = 1; j < i; j++) {
-				str += " ";
-			}
-			for (int j = num; j >= i ; j--) {
-				str += "*";
-			}
-			System.out.println(str);
+
+		if (num >= 90 && num <= 100) {
+			System.out.println("A");
+		} else if (num >= 80 && num <= 89) {
+			System.out.println("B");
+		} else if (num >= 70 && num <= 79) {
+			System.out.println("C");
+		} else if (num >= 60 && num <= 69) {
+			System.out.println("D");
+		} else {
+			System.out.println("F");
 		}
 	}
 }
