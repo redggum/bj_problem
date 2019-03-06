@@ -2,22 +2,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 10430번 나머지 */
+/* 2440번 별 찍기 - 3 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		String[] strs = br.readLine().split(" ");
-		
-		int a = Integer.parseInt(strs[0]);
-		int b = Integer.parseInt(strs[1]);
-		int c = Integer.parseInt(strs[2]);
+		int num = Integer.parseInt(br.readLine());
 
-		System.out.println((a + b) % c);
-		System.out.println(((a % c) + (b % c)) % c);
-		System.out.println((a * b) % c);
-		System.out.println(((a % c) * (b % c)) % c);
+		for (int i = 1; i <= num; i++) {
+			for (int j = num; j >= i; j--) {
+				System.out.print('*');
+			}
+			
+			System.out.println();
+		}
 	}
 }
