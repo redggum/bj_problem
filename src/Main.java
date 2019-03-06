@@ -2,17 +2,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 2742번 기찍 N */
+/* 1008번 A/B */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int num = Integer.parseInt(br.readLine());
+		String[] strs = br.readLine().split(" ");
 		
-		for (int i = num; i > 0; i--) {
-			System.out.println(i);
-		}
+		double a = Double.parseDouble(strs[0]);
+		double b = Double.parseDouble(strs[1]);
+		
+		System.out.println(a / b);
 	}
 }
