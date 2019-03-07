@@ -1,31 +1,30 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Scanner;
 
-/* 10817번 세 수 */
+/* 11718번 그대로 출력하기 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String[] strs = br.readLine().split(" ");
-		
-		int a = Integer.parseInt(strs[0]);
-		int b = Integer.parseInt(strs[1]);
-		int c = Integer.parseInt(strs[2]);
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Scanner sc = new Scanner(System.in);
 
-		ArrayList<Integer> arr = new ArrayList<Integer>();
+		ArrayList<String> arr = new ArrayList<String>();
+
+		while(sc.hasNextLine()) {
+			String in = sc.nextLine();
+			
+			if (in.isEmpty() || in == null) {
+				break;
+			}
+			arr.add(in);
+		}
+		sc.close();
 		
-		arr.add(a);
-		arr.add(b);
-		arr.add(c);
-		
-		Collections.sort(arr);
-		
-		System.out.println(arr.get(1));
+//		System.out.println(arr.size());
+		for (int i = 0; i < arr.size(); i++) {
+			System.out.println(arr.get(i));
+		}
 	}
 }
