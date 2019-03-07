@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 10172번 개 */
+/* 1924번 2007년 */
 
 public class Main {
 
