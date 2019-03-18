@@ -1,31 +1,27 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 
-/* 2577번 숫자의 개수 */
+/* 2750번 수 정렬하기 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int cnt = Integer.parseInt(br.readLine());
 		
-		int num1 = Integer.parseInt(br.readLine());
-		int num2 = Integer.parseInt(br.readLine());
-		int num3 = Integer.parseInt(br.readLine());
+		ArrayList<Integer> arr = new ArrayList<Integer>();
 		
-		long sum = num1 * num2 * num3;
-		
-		String[] strs = String.valueOf(sum).split("");
-		
-		int[] cnt = new int[10];
-		
-		
-		for (int i = 0; i < strs.length; i++) {
-			cnt[Integer.parseInt(strs[i])]++;
+		for (int i = 0; i < cnt; i++) {
+			arr.add(Integer.parseInt(br.readLine()));
 		}
 		
-		for (int i = 0; i < cnt.length; i++) {
-			System.out.println(cnt[i]);
+		Collections.sort(arr);
+		
+		for (int i = 0; i < cnt; i++) {
+			System.out.println(arr.get(i));
 		}
 	}
 }
