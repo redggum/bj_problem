@@ -1,31 +1,35 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
-/* 4673번 셀프 넘버 */
+/* 8958번 OX퀴즈 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		boolean[] num = new boolean[10001];
+		int T = 0;
 		
-		for (int i = 1; i <= 10000; i++) {
-			String[] digits = String.valueOf(i).split("");
+		T = Integer.parseInt(br.readLine());
+		
+		for (int t = 1; t <= T; t++) {
 			int sum = 0;
-			for (int j = 0; j < digits.length; j++) {
-				sum += Integer.parseInt(digits[j]);
+			int cnt = 0;
+			
+			String[] strs = br.readLine().split("");
+			
+			for (int i = 0; i < strs.length; i++) {
+				if (strs[i].equals("O")) {
+					cnt++;
+					sum += cnt;
+				} else {
+					cnt = 0;
+				}
 			}
 			
-			if (i + sum > 10000) {
-				continue;
-			}
-			
-			num[i + sum] = true;
+			System.out.println(sum);
 		}
 		
-		for (int i = 1; i < 10000; i++) {
-			if (num[i] == false) {
-				System.out.println(i);
-			}
-		}
 	}
 }
