@@ -7,36 +7,43 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-/* 1065번 한수 */
+/* 9012번 괄호 */
 
 public class Main {
-	static int N;	// 1000
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		N = Integer.parseInt(br.readLine());
+		int T;
+		String res;
+		T = Integer.parseInt(br.readLine());
 		String[] strs;
-		int cnt = 0;
-		int gap = 0;
-		for (int i = 1; i <= N; i++) {
+		int open_cnt = 0;
+
+		for (int t = 0; t < T; t++) {			
+			open_cnt = 0;
+			strs = br.readLine().split("");
 			
-			if (i < 10) {
-				cnt++;
-				continue;
-			}
-			
-			strs = String.valueOf(i).split("");
-			gap = Integer.parseInt(strs[0]) - Integer.parseInt(strs[1]);
-			for (int j = 0; j < strs.length - 1; j++) {
-				if (gap != Integer.parseInt(strs[j]) - Integer.parseInt(strs[j + 1])) {
-					cnt--;
-					break;
+			for (int i = 0; i < strs.length; i++) {
+				if (strs[i].equals("(")) {
+					open_cnt++;
+				} else if (strs[i].equals(")")) {
+					open_cnt--;
+					if (open_cnt < 0) {
+						break;
+					}
+				} else {
+					open_cnt++;
 				}
 			}
 			
-			cnt++;
+			if (open_cnt != 0) {
+				res = "NO";
+			} else {
+				res = "YES";
+			}
+			
+			System.out.println(res);
 		}
 		
-		System.out.println(cnt);
 	}
 }
