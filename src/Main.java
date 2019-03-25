@@ -2,12 +2,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 11726번 2xn 타일링 */
+/* 2747번 피보나치 수 */
 
 public class Main {
 	
-	final static int DIV = 10007;
-
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
@@ -23,11 +21,11 @@ public class Main {
 		
 		int[] sum = new int[N + 1];
 		
+		sum[0] = 0;
 		sum[1] = 1;
-		sum[2] = 2;
 		
-		for (int n = 3; n <= N; n++) {
-			sum[n] = ((sum[n - 1] % DIV) + (sum[n - 2] % DIV)) % DIV;
+		for (int n = 2; n <= N; n++) {
+			sum[n] = sum[n - 2] + sum[n - 1];
 		}
 
 		System.out.println(sum[N]);
