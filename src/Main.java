@@ -2,25 +2,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 10950번 A + B - 3 */
+/* 2292번 벌집 */
 
 public class Main {
-	
+	static int MUL = 6;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int N = Integer.parseInt(br.readLine());
-		String[] strs;
-		int a;
-		int b;
+		long N = Long.parseLong(br.readLine());
+		long sum = 1;
 		
-		for (int i = 0; i < N; i++) {
-			strs = br.readLine().split(" ");
+		// 1,(6) 7, (12) 19, (18) 37, (24) 61
+		for (int i = 1; i <= N; i++) {
+			sum += (MUL * (i - 1));
 			
-			a = Integer.parseInt(strs[0]);
-			b = Integer.parseInt(strs[1]);
-			
-			System.out.println((a + b));
+			if (N <= sum) {
+				System.out.println(i);
+				break;
+			}
 		}
 	}
 }
