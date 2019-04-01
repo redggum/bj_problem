@@ -1,41 +1,30 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.StringTokenizer;
 
-/* 2309번 일곱 난쟁이 */
+/* 2609번 최대공약수와 최소공배수 */
 
 public class Main {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 		
-		int[] dwarf = new int[9];
-		int[] noDwarf = new int[2];
-		int sum = 0;
+		int a = Integer.parseInt(st.nextToken());
+		int b = Integer.parseInt(st.nextToken());
 		
-		for (int i = 0; i < dwarf.length; i++) {
-			dwarf[i] = Integer.parseInt(br.readLine());
-			sum += dwarf[i];
+		// 최대 공약수
+		System.out.println(gcd(a, b));
+		
+		// 최소 공배수
+		System.out.println(a * b / gcd(a, b));
+	}
+	
+	public static int gcd(int a, int b) {
+		if (b == 0) {
+			return a;
 		}
 		
-		for (int i = 0; i < dwarf.length; i++) {
-			for (int j = i + 1; j < dwarf.length; j++) {
-				if (sum - dwarf[i] - dwarf[j] == 100) {
-					noDwarf[0] = dwarf[i];
-					noDwarf[1] = dwarf[j];
-				}
-			}
-		}
-		
-		Arrays.sort(dwarf);
-		
-		for (int i = 0; i < dwarf.length; i++) {
-			if (dwarf[i] == noDwarf[0] || dwarf[i] == noDwarf[1]) {
-				continue;
-			}
-			
-			System.out.println(dwarf[i]);
-		}
-		
+		return gcd(b, a % b);
 	}
 }
