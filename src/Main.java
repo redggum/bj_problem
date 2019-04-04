@@ -1,119 +1,150 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 import java.util.StringTokenizer;
 
-/* 7576번 토마토 */
+/* 2667번 단지번호붙이기 */
 
 public class Main {
+	static int N;
+	static int[] parent;
+	static boolean[] visited;
+	static int[] moveX = new int[] { 1, 0, -1, 0 };
+	static int[] moveY = new int[] { 0, 1, 0, -1 };
+	static int[][] xy;
+
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int M, N;
+
+		N = Integer.parseInt(br.readLine());
+		xy = new int[N + 1][N + 1];
 		String[] strs;
-		
-		int[][] date;
-		int[][] box;
-		Queue<Matrix> q = new LinkedList<Matrix>();
-		
-		int[] moveN = new int[] {1, 0, -1, 0};
-		int[] moveM = new int[] {0, 1, 0, -1};
-		
-		int n, m;
-		int nextN, nextM;
-		
-		strs = br.readLine().split(" ");
-		
-		M = Integer.parseInt(strs[0]);
-		N = Integer.parseInt(strs[1]);
-		
-		date = new int[N + 1][M + 1];
-		box = new int[N + 1][M + 1];
-		
-		for (int i = 1; i <= N; i++) {
-			strs = br.readLine().split(" ");
-			
-//			System.out.println(Arrays.toString(strs));
-			
-			for (int j = 1; j <= M; j++) {
-				box[i][j] = Integer.parseInt(strs[j - 1]);
-				
-				if (box[i][j] == 1) {
-					q.offer(new Matrix(i, j));
-					date[i][j] = 1;
-				}
-				
-				if (box[i][j] == -1) {
-					date[i][j] = -1;
+
+		parent = new int[N * N + 1];
+		visited = new boolean[N * N + 1];
+
+		for (int x = 1; x <= N; x++) {
+			strs = br.readLine().split("");
+			for (int y = 1; y <= N; y++) {
+				xy[x][y] = Integer.parseInt(strs[y - 1]);
+
+				parent[xy(x, y)] = xy(x, y);
+			}
+		}
+
+		for (int x = 1; x <= N; x++) {
+			for (int y = 1; y <= N; y++) {
+				if (xy[x][y] == 1 && visited[xy(x, y)] == false) {
+					bfs(x, y);
 				}
 			}
 		}
+
+		Set<Integer> index = new HashSet<Integer>();
+		int[] par_cnt = new int[N * N + 1];
+		int idx;
+
+		for (int x = 1; x <= N; x++) {
+			for (int y = 1; y <= N; y++) {
+				if (xy[x][y] == 0) {
+					continue;
+				}
+
+				idx = parent[xy(x, y)];
+
+				par_cnt[idx]++;
+				index.add(idx);
+			}
+		}
 		
-		// bfs
-		Matrix tempMat;
+		System.out.println(index.size());
+		
+		int[] arr = new int[index.size()];
+		
+		Iterator<Integer> it = index.iterator();
+		for (int i = 0; i < index.size(); i++) {
+			arr[i] = par_cnt[it.next()];
+		}
+		
+		Arrays.sort(arr);
+		
+		for (int i = 0; i < index.size(); i++) {
+			System.out.println(arr[i]);
+		}
+	}
+	
+	static void bfs(int x, int y) {
+		Queue<Node> q = new LinkedList<Node>();
+		int nextX, nextY;
+		int curX, curY;
+		
+		q.offer(new Node(x, y));
+		visited[xy(x, y)] = true;
 		
 		while(!q.isEmpty()) {
-			tempMat = q.poll();
-			n = tempMat.getN();
-			m = tempMat.getM();
-			
-//			System.out.println("n : " + n + ", m : " + m);
+			curX = q.peek().getX();
+			curY = q.peek().getY();
+			q.poll();
 			
 			for (int i = 0; i < 4; i++) {
-				nextN = n + moveN[i];
-				nextM = m + moveM[i];
-				
-				if (nextN <= 0 || nextN > N || nextM <= 0 || nextM > M) {
-					continue;
-				}
-				
-				if (box[nextN][nextM] == -1 || date[nextN][nextM] != 0) {
-					continue;
-				}
-				
-				q.offer(new Matrix(nextN, nextM));
-				date[nextN][nextM] = date[n][m] + 1;
-			}
-		}
-		
-		int max = -1;
-		
-		for (int i = 1; i <= N; i++) {
-			for (int j = 1; j <= M; j++) {
-//				System.out.print(date[i][j] + " ");
-				
-				if (date[i][j] == 0) {
-					System.out.println(-1);
-					return;
-				}
-				
-				if (max < date[i][j]) {
-					max = date[i][j];
+				nextX = curX + moveX[i];
+				nextY = curY + moveY[i];
+
+				if (nextX >= 1 && nextX <= N && nextY >= 1 && nextY <= N && xy[nextX][nextY] == 1 && visited[xy(nextX, nextY)] == false) {
+//					System.out.println("xy : " + xy(x, y) + ", next xy : " + xy(nextX, nextY));
+					union(xy(x, y), xy(nextX, nextY));
+					visited[xy(nextX, nextY)] = true;
+//					System.out.println("par(xy) : " + parent[xy(x, y)] + ", next par(xy) : " + parent[xy(nextX, nextY)]);
+					q.offer(new Node(nextX, nextY));
 				}
 			}
 			
 		}
-		
-		System.out.println(max - 1);
+	}
+
+	static int xy(int x, int y) {
+		return N * (x - 1) + y;
+	}
+
+	static int find(int xy) {
+		if (xy == parent[xy]) {
+			return parent[xy];
+		}
+
+		return find(parent[xy]);
+	}
+
+	static void union(int xy1, int xy2) {
+		int parA = find(xy1);
+		int parB = find(xy2);
+
+		if (parA != parB) {
+			parent[xy2] = parA;
+		}
 	}
 }
 
-class Matrix {
-	private int n;
-	private int m;
+class Node {
+	private int x;
+	private int y;
 	
-	public Matrix(int n, int m) {
-		this.n = n;
-		this.m = m;
-	}
-		
-	int getN() {
-		return n;
+	public Node(int x, int y) {
+		this.x = x;
+		this.y = y;
 	}
 	
-	int getM() {
-		return m;
+	int getX() {
+		return x;
+	}
+	
+	int getY() {
+		return y;
 	}
 }
