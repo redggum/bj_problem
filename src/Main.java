@@ -11,7 +11,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-/* 2751번 수 정렬하기 2 */
+/* 2442번 별 찍기 - 5 */
 
 public class Main {
 	static int N;
@@ -20,17 +20,20 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		N = Integer.parseInt(br.readLine());
+		String str;
 		
-		int[] arr = new int[N];
-		
-		for (int i = 0; i < N; i++) {
-			arr[i] = Integer.parseInt(br.readLine());
-		}
-		
-		Arrays.sort(arr);
-		
-		for (int i = 0; i < arr.length; i++) {
-			System.out.println(arr[i]);
+		for (int i = 1; i <= N; i++) {
+			str = "";
+			
+			for (int j = 1; j <= N - i; j++) {
+				str += " ";
+			}
+			
+			for (int j = 1; j <= 2 * i - 1; j++) {
+				str += "*";
+			}
+			
+			System.out.println(str);
 		}
 	}
 }
