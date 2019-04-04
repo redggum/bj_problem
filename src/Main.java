@@ -11,29 +11,61 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-/* 2442번 별 찍기 - 5 */
+/* 2606번 바이러스 */
 
 public class Main {
-	static int N;
-
+	static int N, M, a, b;
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		ArrayList<ArrayList<Integer>> arr;
 
 		N = Integer.parseInt(br.readLine());
-		String str;
+		M = Integer.parseInt(br.readLine());
+		String[] strs;
+		Queue<Integer> q = new LinkedList<Integer>();
+		boolean[] visited = new boolean[N + 1];
 		
-		for (int i = 1; i <= N; i++) {
-			str = "";
-			
-			for (int j = 1; j <= N - i; j++) {
-				str += " ";
-			}
-			
-			for (int j = 1; j <= 2 * i - 1; j++) {
-				str += "*";
-			}
-			
-			System.out.println(str);
+		arr = new ArrayList<ArrayList<Integer>>();
+		
+		for (int i = 0; i <= N; i++) {
+			arr.add(new ArrayList<Integer>());
 		}
+		
+		for (int i = 0; i < M; i++) {
+			strs = br.readLine().split(" ");
+			
+			a = Integer.parseInt(strs[0]);
+			b = Integer.parseInt(strs[1]);
+			
+			arr.get(a).add(b);
+			arr.get(b).add(a);
+		}
+		
+		q.offer(1);
+		visited[1] = true;
+		
+		int node;
+		int next;
+		int cnt = -1;
+		
+		while(!q.isEmpty()) {
+			node = q.poll();
+			cnt++;
+			
+			for (int i = 0; i < arr.get(node).size(); i++) {
+				next = arr.get(node).get(i);
+				
+				if (visited[next] == false) {
+					q.offer(next);
+					visited[next] = true;
+				}
+			}
+		}
+		
+		System.out.println(cnt);
+		
+		
 	}
 }
