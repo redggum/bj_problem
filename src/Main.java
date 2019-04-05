@@ -11,27 +11,30 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-/* 10952번 A+B - 5 */
+/* 1193번 분수찾기 */
 
 public class Main {
-	static int N, M, a, b;
+	static long N, diff;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		String[] strs;
-
-		while (true) {
-			strs = br.readLine().split(" ");
-
-			a = Integer.parseInt(strs[0]);
-			b = Integer.parseInt(strs[1]);
-			
-			if (a == 0 && b == 0) {
-				break;
+		N = Long.parseLong(br.readLine());
+		for(int i = 2; i <= (int) Math.sqrt(N) * 2; i++) {
+			if (N > i * (i - 1) / 2 && N <= i * (i + 1) / 2 ) {
+//				System.out.println("i : " + i);
+				
+				diff = N - i * (i - 1) / 2;
+//				System.out.println(diff);
+				
+				if (i % 2 == 1) { // odd
+					System.out.println((i - diff + 1) + "/" + diff);
+				} else { // even
+					System.out.println(diff + "/" + (i - diff + 1));
+				}
+				
+//				break;
 			}
-			
-			System.out.println(a + b);
 		}
 	}
 }
