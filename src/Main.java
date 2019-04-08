@@ -10,165 +10,138 @@ import java.util.Queue;
 
 public class Main {
 	static int T, M, N, K;
-	static ArrayList<Node> arr;
-	
+	static ArrayList<Integer> arr;
+	static int[] parent;
+
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		String[] strs;
 		int x, y;
-		int[] moveX = {1, 0, -1, 0};
-		int[] moveY = {0, 1, 0, -1};
+		int[] moveX = { 1, 0, -1, 0 };
+		int[] moveY = { 0, 1, 0, -1 };
 		int nextX, nextY;
-		boolean[][] visited;
-		Node node, nextNode, nodeParA, nodeParB;
-		Queue<Node> q;
-		
+		boolean[] visited;
+		Queue<Integer> q;
+
 		T = Integer.parseInt(br.readLine());
-		
+
 		for (int tc = 1; tc <= T; tc++) {
 			strs = br.readLine().split(" ");
-			
+
 			M = Integer.parseInt(strs[0]);
 			N = Integer.parseInt(strs[1]);
 			K = Integer.parseInt(strs[2]);
-			
+
 			// init;
-			visited = new boolean[M][N];
-			q = new LinkedList<Node>();
-			for (int i = 0; i < visited.length; i++) {
-				Arrays.fill(visited[i], false);
-			}
-			
-			arr = new ArrayList<Node>();
-			
+			visited = new boolean[M * N + 1];
+			q = new LinkedList<Integer>();
+			Arrays.fill(visited, false);
+
+			arr = new ArrayList<Integer>();
+
+			parent = new int[M * N + 1];
+
+			int xy;
+			int nextXy;
+
 			for (int i = 0; i < K; i++) {
 				strs = br.readLine().split(" ");
-				
+
 				x = Integer.parseInt(strs[0]);
 				y = Integer.parseInt(strs[1]);
+
+				xy = getXY(x, y);
+				arr.add(xy);
+
+				parent[xy] = xy;
 				
-				arr.add(new Node(x, y));
-				arr.get(i).setPar(arr.get(i));
+//				System.out.println("x : " + x + ", y : " + y + ", xy : " + xy);
 			}
+
+			int sum = 0;
 			
 			for (int i = 0; i < K; i++) {
-				node = arr.get(i);
+				xy = arr.get(i);
 				
-				if (visited[node.getX()][node.getY()] == true) {
+//				System.out.println(visited[xy]);
+
+				if (visited[xy] == true) {
 					continue;
 				}
+
+				q.offer(xy);
+				visited[xy] = true;
 				
-				q.offer(node);
-				
-				while(!q.isEmpty()) {
-					node = q.poll();
-					
+				sum++;
+
+				while (!q.isEmpty()) {
+					xy = q.poll();
+
 					for (int j = 0; j < 4; j++) {
-						nextX = node.getX() + moveX[j];
-						nextY = node.getY() + moveY[j];
+						nextX = getX(xy) + moveX[j];
+						nextY = getY(xy) + moveY[j];
 						
-						if (nextX < 0 || nextX >= M || nextY < 0 || nextY >= N || visited[nextX][nextY]) {
+						if (nextX < 0 || nextX >= M || nextY < 0 || nextY >= N || visited[nextXy = getXY(nextX, nextY)]) {
 							continue;
 						}
 						
-						nextNode = searchNodeByXY(nextX, nextY);
 						
-						if (nextNode == null) {
+						if(parent[nextXy] == 0) {
 							continue;
 						}
+
+						q.offer(nextXy);
+						visited[nextXy] = true;
 						
-						nodeParA = find(node);
-						nodeParB = find(nextNode); 
-						if (!nodeParA.equals(nodeParB)) {
-							nextNode.setPar(nodeParA);
-							q.offer(nextNode);
-							visited[nextX][nextY] = true;
-						}
+//						System.out.println("nextX : " + nextX + ", nextY : " + nextY);
+						
+//						if (find(xy) != find(nextXy)) {
+////							System.out.println("nextXy : " + nextXy + ", xy : " + xy);
+////							System.out.println("parent of nextXy : " + parent[nextXy] + ", parent of xy : " + parent[xy]);
+//							parent[nextXy] = parent[xy];
+//							q.offer(nextXy);
+//							visited[nextXy] = true;
+//						}
 					}
-					
+
 				}
 			}
-			
-			int sum = 0;
-			Node tmp = new Node(-1, -1);
-			
-			for (int i = 0; i < K; i++) {
-				if (!arr.get(i).getPar().equals(tmp)) {
-					sum++;
-					tmp = arr.get(i).getPar();
-				}
-			}
-			
+
+//			int sum = 0;
+//			Set<Integer> tmp = new HashSet<Integer>();
+//			int val;
+//			
+//			for (int i = 0; i < K; i++) {
+//				val = parent[arr.get(i)];
+////				System.out.println("val : " + val);
+//				if (!tmp.contains(val)) {
+//					sum++;
+//					tmp.add(val);
+//				}
+//			}
+
 			System.out.println(sum);
 		}
 	}
-	
-	static Node find(Node node) {
-		if (node.getPar().equals(node)) {
-			return node;
+
+	static int find(int xy) {
+		if (parent[xy] == xy) {
+			return xy;
 		}
-		
-		return find(node.getPar());
-	}
-	
-	static Node searchNodeByXY(int x, int y) {
-		Node node;
-		
-//		System.out.println("param x :" + x + ", y : " + y);
-		
-		for (int i = 0; i < K; i++) {
-			node = arr.get(i); 
-			
-//			System.out.println("node x : " + node.getX() + ", y : " + node.getY());
-			
-			if (node.getX() == x && node.getY() == y) {
-				return node;
-			}
-		}
-		
-		return null;
-	}
-}
 
-class Node {
-	private int x;
-	private int y;
-	private Node par;
-	private Node node;
-	
-	Node(int x, int y) {
-		this.x = x;
-		this.y = y;
-		this.par = this;
-		this.node = this;
+		return find(parent[xy]);
 	}
 
-	public int getX() {
-		return x;
+	static int getXY(int x, int y) {
+		return y * M + x + 1;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	static int getX(int xy) {
+		return xy % M - 1;
 	}
 
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public Node getPar() {
-		return par;
-	}
-
-	public void setPar(Node par) {
-		this.par = par;
-	}
-	
-	public Node getNode() {
-		return node;
+	static int getY(int xy) {
+		return xy / M;
 	}
 }
