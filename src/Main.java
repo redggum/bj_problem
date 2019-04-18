@@ -1,42 +1,45 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Scanner;
 
-/* 1929번 소수 구하기 */
+/* 10250번 ACM 호텔 */
 
 public class Main {
-	static int M, N;
+	static int T, H, W, N;
 	static int[] arr;
 	static int[] D;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		String[] strs = br.readLine().split(" ");
-
-		M = Integer.parseInt(strs[0]);
-		N = Integer.parseInt(strs[1]);
-
-		boolean[] num = new boolean[N + 1];
-
-		Arrays.fill(num, true);
-
-		num[1] = false;
-
-		// i's mul
-		for (int i = 2; (i * i) <= N; i++) {
-			for (int j = i * i; j <= N; j += i) {
-				num[j] = false;
+		T = Integer.parseInt(br.readLine());
+		
+		for (int tc = 0; tc < T; tc++) {
+			String[] strs = br.readLine().split(" ");
+			
+			H = Integer.parseInt(strs[0]);
+			W = Integer.parseInt(strs[1]);
+			N = Integer.parseInt(strs[2]);
+			
+			int x, y;
+			
+			x = N / H;
+			y = N % H;
+			
+//			System.out.println("y : " + y);
+//			System.out.println("x : " + x);
+			
+			if (y == 0) {
+				y = H;
+			} else {
+				x = x + 1;
 			}
-		}
-
-		for (int i = M; i <= N; i++) {
-			if (num[i] == true) {
-				System.out.println(i);
+			
+			if (x < 10) {
+				System.out.println(y + "0" + x);
+			} else {
+				System.out.println(y + "" + x);
 			}
-
 		}
 	}
 }
