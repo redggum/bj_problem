@@ -4,52 +4,39 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Scanner;
 
-/* 11053번 가장 긴 증가하는 부분 수열 */
+/* 1929번 소수 구하기 */
 
 public class Main {
-	static int N;
+	static int M, N;
 	static int[] arr;
 	static int[] D;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		N = Integer.parseInt(br.readLine());
-		int max = 0;
-		
-		arr = new int[N];
-		D = new int[N];
-		
+
 		String[] strs = br.readLine().split(" ");
-		
-		for (int i = 0; i < N; i++) {
-			arr[i] = Integer.parseInt(strs[i]);
-		}
-		
-		Arrays.fill(D, 1);
-		
-		for (int i = 1; i < N; i++) {
-			max = 0;
-			for (int j = 0; j < i; j++) {
-				if (arr[j] < arr[i] && D[j] > max) {
-					D[i] = D[j] + 1;
-					max = D[j];
-				}				
-			}
-			
-//			System.out.println("D[" + i + "] : " + D[i]);
-		}
-		
-		max = 0;
-		for (int i = 0; i < N; i++) {
-			if (max < D[i]) {
-				max = D[i];
+
+		M = Integer.parseInt(strs[0]);
+		N = Integer.parseInt(strs[1]);
+
+		boolean[] num = new boolean[N + 1];
+
+		Arrays.fill(num, true);
+
+		num[1] = false;
+
+		// i's mul
+		for (int i = 2; (i * i) <= N; i++) {
+			for (int j = i * i; j <= N; j += i) {
+				num[j] = false;
 			}
 		}
-		
-		System.out.println(max);
-		
-		
-		
+
+		for (int i = M; i <= N; i++) {
+			if (num[i] == true) {
+				System.out.println(i);
+			}
+
+		}
 	}
 }
