@@ -1,45 +1,58 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
-/* 10250번 ACM 호텔 */
+/* 1158번 조세퍼스 문제 */
 
 public class Main {
-	static int T, H, W, N;
-	static int[] arr;
-	static int[] D;
+	static int N, K;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		T = Integer.parseInt(br.readLine());
+		String[] strs = br.readLine().split(" ");
+
+		N = Integer.parseInt(strs[0]);
+		K = Integer.parseInt(strs[1]);
+
+		ArrayList<Integer> arr = new ArrayList<>();
 		
-		for (int tc = 0; tc < T; tc++) {
-			String[] strs = br.readLine().split(" ");
-			
-			H = Integer.parseInt(strs[0]);
-			W = Integer.parseInt(strs[1]);
-			N = Integer.parseInt(strs[2]);
-			
-			int x, y;
-			
-			x = N / H;
-			y = N % H;
-			
-//			System.out.println("y : " + y);
-//			System.out.println("x : " + x);
-			
-			if (y == 0) {
-				y = H;
-			} else {
-				x = x + 1;
-			}
-			
-			if (x < 10) {
-				System.out.println(y + "0" + x);
-			} else {
-				System.out.println(y + "" + x);
-			}
+		for (int i = 1; i <= N; i++) {
+			arr.add(i);
 		}
+		
+		int[] check = new int[N + 1];
+		Arrays.fill(check, 1);
+		
+		int index = -1;
+		int end;
+		
+		System.out.print("<");
+		
+		while(!arr.isEmpty()) {
+//			System.out.println("arr.size() : " + arr.size());
+//			for (Object obj : arr) {
+//				System.out.print(obj + " ");
+//			}
+//			System.out.println();
+//			System.out.println("index : " + index + ", K : " + K);
+			if (index + K < arr.size()) {
+				index += K;
+			} else {
+				index = (index + K - arr.size()) % arr.size();
+			}
+			
+//			System.out.println("index : " + index);
+			System.out.print(arr.remove(index));
+			if (!arr.isEmpty()) {
+				System.out.print(", ");
+			}
+			index--;
+		}
+		
+		System.out.println(">");
 	}
 }
