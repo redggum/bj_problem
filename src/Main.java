@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 /* 1158번 조세퍼스 문제 */
 
@@ -28,7 +27,6 @@ public class Main {
 		Arrays.fill(check, 1);
 		
 		int index = -1;
-		int end;
 		
 		System.out.print("<");
 		
