@@ -1,56 +1,50 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-/* 1158번 조세퍼스 문제 */
+/* 2490번 윷놀이 */
 
 public class Main {
 	static int N, K;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] strs;
+		int[] yut = new int[4];
+		int cnt;
 
-		String[] strs = br.readLine().split(" ");
+		for (int i = 0; i < 3; i++) {
+			strs = br.readLine().split(" ");
 
-		N = Integer.parseInt(strs[0]);
-		K = Integer.parseInt(strs[1]);
+			yut[0] = Integer.parseInt(strs[0]);
+			yut[1] = Integer.parseInt(strs[1]);
+			yut[2] = Integer.parseInt(strs[2]);
+			yut[3] = Integer.parseInt(strs[3]);
 
-		ArrayList<Integer> arr = new ArrayList<>();
-		
-		for (int i = 1; i <= N; i++) {
-			arr.add(i);
-		}
-		
-		int[] check = new int[N + 1];
-		Arrays.fill(check, 1);
-		
-		int index = -1;
-		
-		System.out.print("<");
-		
-		while(!arr.isEmpty()) {
-//			System.out.println("arr.size() : " + arr.size());
-//			for (Object obj : arr) {
-//				System.out.print(obj + " ");
-//			}
-//			System.out.println();
-//			System.out.println("index : " + index + ", K : " + K);
-			if (index + K < arr.size()) {
-				index += K;
-			} else {
-				index = (index + K - arr.size()) % arr.size();
+			cnt = 0;
+
+			for (int j = 0; j < yut.length; j++) {
+				if (yut[j] == 0) {
+					cnt++;
+				}
 			}
-			
-//			System.out.println("index : " + index);
-			System.out.print(arr.remove(index));
-			if (!arr.isEmpty()) {
-				System.out.print(", ");
+
+			switch (cnt) {
+			case 0:
+				System.out.println('E');
+				break;
+			case 1:
+				System.out.println('A');
+				break;
+			case 2:
+				System.out.println('B');
+				break;
+			case 3:
+				System.out.println('C');
+				break;
+			case 4:
+				System.out.println('D');
 			}
-			index--;
 		}
-		
-		System.out.println(">");
 	}
 }
