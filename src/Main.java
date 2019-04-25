@@ -2,49 +2,54 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 2490번 윷놀이 */
+/* 2941번 크로아티아 알파벳 */
 
 public class Main {
 	static int N, K;
+	static String[] two = { "c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z=", "dz" };
+	static String three = "dz=";
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String[] strs;
-		int[] yut = new int[4];
-		int cnt;
+		String[] letters = br.readLine().split("");
+		int cnt = 0;
+		boolean found;
+		String compare;
 
-		for (int i = 0; i < 3; i++) {
-			strs = br.readLine().split(" ");
+		for (int i = 0; i < letters.length; i++) {
+			found = false;
+//			System.out.println("i : " + i);
+			if (i + 1 < letters.length) {
+				compare = letters[i] + letters[i + 1];
+//				System.out.println("compare : " + compare);
+				for (String word : two) {
+					if (word.equals(compare)) {
+						if (two[8].equals(compare)) {
+							if (i + 2 < letters.length && three.equals(compare + letters[i + 2])) {
+								i++;
+//								System.out.println("three");
+							} else {
+								break;
+							}
+						}
 
-			yut[0] = Integer.parseInt(strs[0]);
-			yut[1] = Integer.parseInt(strs[1]);
-			yut[2] = Integer.parseInt(strs[2]);
-			yut[3] = Integer.parseInt(strs[3]);
+						cnt++;
+						found = true;
+						i++;
 
-			cnt = 0;
+//						System.out.println("matched : " + compare);
+						break;
+					}
+				}
 
-			for (int j = 0; j < yut.length; j++) {
-				if (yut[j] == 0) {
+				if (found == false) {
 					cnt++;
 				}
-			}
-
-			switch (cnt) {
-			case 0:
-				System.out.println('E');
-				break;
-			case 1:
-				System.out.println('A');
-				break;
-			case 2:
-				System.out.println('B');
-				break;
-			case 3:
-				System.out.println('C');
-				break;
-			case 4:
-				System.out.println('D');
+			} else {
+				cnt++;
 			}
 		}
+
+		System.out.println(cnt);
 	}
 }
