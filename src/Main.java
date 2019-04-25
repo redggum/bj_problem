@@ -1,55 +1,77 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
-/* 2941번 크로아티아 알파벳 */
+/* 11403번 경로 찾기 */
 
 public class Main {
-	static int N, K;
-	static String[] two = { "c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z=", "dz" };
-	static String three = "dz=";
+	static int N;
+	static ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String[] letters = br.readLine().split("");
-		int cnt = 0;
-		boolean found;
-		String compare;
-
-		for (int i = 0; i < letters.length; i++) {
-			found = false;
-//			System.out.println("i : " + i);
-			if (i + 1 < letters.length) {
-				compare = letters[i] + letters[i + 1];
-//				System.out.println("compare : " + compare);
-				for (String word : two) {
-					if (word.equals(compare)) {
-						if (two[8].equals(compare)) {
-							if (i + 2 < letters.length && three.equals(compare + letters[i + 2])) {
-								i++;
-//								System.out.println("three");
-							} else {
-								break;
-							}
-						}
-
-						cnt++;
-						found = true;
-						i++;
-
-//						System.out.println("matched : " + compare);
-						break;
-					}
+		
+		N = Integer.parseInt(br.readLine());
+		String[] strs;
+		int val = 0;
+		
+		for (int i = 0; i < N; i++) {
+			list.add(new ArrayList<Integer>());
+		}
+		
+		for (int i = 0; i < N; i++) {
+			strs = br.readLine().split(" ");
+			
+			for (int j = 0; j < strs.length; j++) {
+				val = Integer.parseInt(strs[j]);
+				if (val == 1) {
+					list.get(i).add(j);
+//					list.get(j).add(i);
 				}
-
-				if (found == false) {
-					cnt++;
-				}
-			} else {
-				cnt++;
 			}
 		}
-
-		System.out.println(cnt);
+		
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				val = bfs(i, j) ? 1 : 0;
+				System.out.print(val + " ");
+			}
+			System.out.println();
+		}
+	}
+	
+	static boolean bfs(int from, int end) {
+		Queue<Integer> q = new LinkedList<Integer>();
+		int node = 0;
+		int nextNode = 0;
+		boolean[][] visited = new boolean[N][N];
+		
+		q.offer(from);
+		
+		while(!q.isEmpty()) {
+			node = q.poll();
+			
+			for (int i = 0; i < list.get(node).size(); i++) {
+				nextNode = list.get(node).get(i);
+				
+				if (visited[node][nextNode]) {
+					continue;
+				}
+				
+				if (nextNode == end) {
+					return true;
+				}
+				
+//				System.out.println("q.offer : " + nextNode);
+				q.offer(nextNode);
+				visited[node][nextNode] = true;
+//				visited[nextNode][node] = true;
+			}
+		}
+		
+		return false;
 	}
 }
