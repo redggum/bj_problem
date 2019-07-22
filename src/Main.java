@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-/* 14501번 퇴사 */
+/* 14502번 연구소 */
 
 public class Main {
 
