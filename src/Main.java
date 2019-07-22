@@ -1,56 +1,79 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
-/* 14502번 연구소 */
+/* 2042번 구간 합 구하기 */
 
 public class Main {
 
+	static int N, M, K;
+	static long[] tree;
+	static int[] arr;
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N;
-		int[] T;
-		int[] P;
-		int[] D;
-		int max;
-		StringTokenizer st;
+	
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		K = Integer.parseInt(st.nextToken());
 		
-		N = Integer.parseInt(br.readLine());
+		tree = new long[N + 1];
+		arr = new int[N + 1];
+		int tmp;
 		
-		T = new int[N];
-		P = new int[N];
-		D = new int[N + 1];
+		for (int i = 1; i <= N; i++) {
+			tmp = Integer.parseInt(br.readLine());
+			update(i, tmp);
+			arr[i] = tmp;
+		}
 		
-		for (int i = 0; i < N; i++) {
+		int a, b, c;
+		
+		for (int i = 0; i < M + K; i++) {
 			st = new StringTokenizer(br.readLine());
-			T[i] = Integer.parseInt(st.nextToken());
-			P[i] = Integer.parseInt(st.nextToken());
-		}
-		
-		for (int i = 0; i <= N; i++) {
-			if (i == 0)
-			{
-				continue;
-			}
+
+			a = Integer.parseInt(st.nextToken());
+			b = Integer.parseInt(st.nextToken());
+			c = Integer.parseInt(st.nextToken());
 			
-			max = 0;
-			for (int j = 0; j < i; j++) {
-//				System.out.println("i : " + i + ", j : " + j + ", T[" + j + "] : " + T[j]);
-				if (max < D[j]) {
-					max = D[j];
-				}
-				
-				if (j + T[j] == i && max < D[j] + P[j]) {
-					max = D[j] + P[j];
-//					System.out.println("max : " + max);
-				}
-				
-				D[i] = max;
-//				System.out.println("D[" + i + "] : " + D[i]);
+			switch(a) {
+			case 1 :
+				update(b, c);
+				break;
+			case 2 :
+				System.out.println(get(c) - get(b - 1));
+				break;
 			}
 		}
+	}
+	
+	static void update(int node, int newVal) {
+		int tmp = node;
+		long gap = newVal - arr[tmp];
 		
-		System.out.println(D[N]);
+		while(tmp <= N) {
+			tree[tmp] += gap;
+//			System.out.println("gap : " + gap + ", tmp : " + tmp + ", tree[" + tmp + "] : " + tree[tmp]);
+			
+			tmp += tmp & -(tmp);
+			
+		}
+		
+//		System.out.println(Arrays.toString(tree));
+	}
+	
+	static long get(int node) {
+		int tmp = node;
+		long sum = 0;
+		
+		while(tmp > 0) {
+			sum += tree[tmp];
+			tmp -= tmp & -(tmp);
+		}
+		
+		return sum;
 	}
 }	
