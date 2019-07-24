@@ -4,15 +4,16 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-/* 2042번 구간 합 구하기 */
+/* 10999번 구간 합 구하기2 */
 
 public class Main {
 
 	static int N, M, K;
 	static long[] tree;
+	static long[] tp, tn;
 	static int[] arr;
 	
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -21,16 +22,20 @@ public class Main {
 		K = Integer.parseInt(st.nextToken());
 		
 		tree = new long[N + 1];
+		tp = new long[N + 1];
+		tn = new long[N + 1];
 		arr = new int[N + 1];
 		int tmp;
 		
 		for (int i = 1; i <= N; i++) {
 			tmp = Integer.parseInt(br.readLine());
-			update(i, tmp);
-			arr[i] = tmp;
+			point_update(i, tmp);
+//			range_update(i, i, tmp);
 		}
 		
-		int a, b, c;
+//		System.out.println(Arrays.toString(tree));
+		
+		int a, b, c, d;
 		
 		for (int i = 0; i < M + K; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -41,39 +46,80 @@ public class Main {
 			
 			switch(a) {
 			case 1 :
-				update(b, c);
+				d = Integer.parseInt(st.nextToken());
+				range_update(b, c, d);
+//				System.out.println(Arrays.toString(tp));
+//				System.out.println(Arrays.toString(tn));
 				break;
 			case 2 :
-				System.out.println(get(c) - get(b - 1));
+//				System.out.println(range_sum(b, c));
+//				System.out.println(point_sum(c) - point_sum(b - 1));
+				
+				System.out.println(range_sum(b, c) + point_sum(c) - point_sum(b - 1));
 				break;
 			}
 		}
 	}
 	
-	static void update(int node, int newVal) {
-		int tmp = node;
-		long gap = newVal - arr[tmp];
+	static void update(int pos, int p, int n) {
 		
-		while(tmp <= N) {
-			tree[tmp] += gap;
-//			System.out.println("gap : " + gap + ", tmp : " + tmp + ", tree[" + tmp + "] : " + tree[tmp]);
+		while(pos <= N) {
+			tp[pos] += p;
+			tn[pos] += n;
 			
-			tmp += tmp & -(tmp);
+			pos += (pos & -(pos));
 			
+//			System.out.println("next pos : " + pos);
 		}
-		
-//		System.out.println(Arrays.toString(tree));
 	}
 	
-	static long get(int node) {
-		int tmp = node;
-		long sum = 0;
+	static void point_update(int pos, int v) {
+		
+		while(pos <= N) {
+			tree[pos] += v;
+			
+			pos += (pos & -(pos));
+			
+//			System.out.println("next pos : " + pos);
+		}
+	}
+	
+	static void range_update(int s, int e, int v) {
+		update(s, v, -(v) * (s - 1));
+		update(e + 1, -(v), v * e);
+	}
+	
+	static long range_sum(int s, int e) {
+		return sum(e) - sum(s - 1);
+	}
+	
+	static long point_sum(int pos) {
+		int tmp = pos;
+		int sum = 0;
 		
 		while(tmp > 0) {
-			sum += tree[tmp];
-			tmp -= tmp & -(tmp);
+			sum += tree[tmp];	
+			tmp -= (tmp & -(tmp));
+			
+//			System.out.println("next tmp : " + tmp);
 		}
 		
 		return sum;
+	}
+	
+	static long sum(int pos) {
+		long p = 0, n = 0;
+		int tmp = pos;
+		
+		while(tmp > 0) {
+			p += tp[tmp];
+			n += tn[tmp];
+					
+			tmp -= (tmp & -(tmp));
+			
+//			System.out.println("next tmp : " + tmp);
+		}
+		
+		return pos * p + n;
 	}
 }	
