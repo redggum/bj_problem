@@ -4,122 +4,50 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-/* 10999번 구간 합 구하기2 */
+/* 11660번 구간 합 구하기5 */
 
 public class Main {
 
-	static int N, M, K;
-	static long[] tree;
-	static long[] tp, tn;
-	static int[] arr;
+	static int N, M;
+	static long[][] sum;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] strs;
 	
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		K = Integer.parseInt(st.nextToken());
-		
-		tree = new long[N + 1];
-		tp = new long[N + 1];
-		tn = new long[N + 1];
-		arr = new int[N + 1];
-		int tmp;
+		strs = br.readLine().split(" ");
+		N = Integer.parseInt(strs[0]);
+		M = Integer.parseInt(strs[1]);
+		sum = new long[N + 1][N + 1];
 		
 		for (int i = 1; i <= N; i++) {
-			tmp = Integer.parseInt(br.readLine());
-			point_update(i, tmp);
-//			range_update(i, i, tmp);
-		}
-		
-//		System.out.println(Arrays.toString(tree));
-		
-		int a, b, c, d;
-		
-		for (int i = 0; i < M + K; i++) {
-			st = new StringTokenizer(br.readLine());
-
-			a = Integer.parseInt(st.nextToken());
-			b = Integer.parseInt(st.nextToken());
-			c = Integer.parseInt(st.nextToken());
+			strs = br.readLine().split(" ");
 			
-			switch(a) {
-			case 1 :
-				d = Integer.parseInt(st.nextToken());
-				range_update(b, c, d);
-//				System.out.println(Arrays.toString(tp));
-//				System.out.println(Arrays.toString(tn));
-				break;
-			case 2 :
-//				System.out.println(range_sum(b, c));
-//				System.out.println(point_sum(c) - point_sum(b - 1));
+			for (int j = 1; j <= N; j++) {
+				if (j == 1) {
+					sum[i][j] = (sum[i - 1][N]) + Integer.parseInt(strs[j - 1]);
+				} else {
+					sum[i][j] = sum[i][j - 1] + Integer.parseInt(strs[j - 1]);
+				}
 				
-				System.out.println(range_sum(b, c) + point_sum(c) - point_sum(b - 1));
-				break;
+//				System.out.println("sum[" + i + "][" + j + "] : " + sum[i][j]);
 			}
 		}
-	}
-	
-	static void update(int pos, int p, int n) {
 		
-		while(pos <= N) {
-			tp[pos] += p;
-			tn[pos] += n;
+		int x1, y1, x2, y2;
+		
+		for (int i = 1; i <= M; i++) {
+			strs = br.readLine().split(" ");
+			x1 = Integer.parseInt(strs[0]);
+			y1 = Integer.parseInt(strs[1]);
+			x2 = Integer.parseInt(strs[2]);
+			y2 = Integer.parseInt(strs[3]);
 			
-			pos += (pos & -(pos));
-			
-//			System.out.println("next pos : " + pos);
+			if (y1 > 1) {
+				System.out.println(sum[x2][y2] - sum[x1][y1 - 1]);
+			} else {
+				System.out.println(sum[x2][y2] - sum[x1 - 1][N]);
+			}
 		}
-	}
-	
-	static void point_update(int pos, int v) {
-		
-		while(pos <= N) {
-			tree[pos] += v;
-			
-			pos += (pos & -(pos));
-			
-//			System.out.println("next pos : " + pos);
-		}
-	}
-	
-	static void range_update(int s, int e, int v) {
-		update(s, v, -(v) * (s - 1));
-		update(e + 1, -(v), v * e);
-	}
-	
-	static long range_sum(int s, int e) {
-		return sum(e) - sum(s - 1);
-	}
-	
-	static long point_sum(int pos) {
-		int tmp = pos;
-		int sum = 0;
-		
-		while(tmp > 0) {
-			sum += tree[tmp];	
-			tmp -= (tmp & -(tmp));
-			
-//			System.out.println("next tmp : " + tmp);
-		}
-		
-		return sum;
-	}
-	
-	static long sum(int pos) {
-		long p = 0, n = 0;
-		int tmp = pos;
-		
-		while(tmp > 0) {
-			p += tp[tmp];
-			n += tn[tmp];
-					
-			tmp -= (tmp & -(tmp));
-			
-//			System.out.println("next tmp : " + tmp);
-		}
-		
-		return pos * p + n;
 	}
 }	
