@@ -3,36 +3,54 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-/* 11659번 구간 합 구하기 4 */
+/* 3653번 영화 수집 */
 
 public class Main {
 
-	static int N, M;
-	static int[] A;
+	static int T, N, M;
 	static long[] tree;
+	static int[] pos;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] strs;
-
-		strs = br.readLine().split(" ");
-		N = Integer.parseInt(strs[0]);
-		M = Integer.parseInt(strs[1]);
-		A = new int[N + 1];
-		tree = new long[N + 1];
-
-		strs = br.readLine().split(" ");
-		for (int i = 1; i <= N; i++) {
-			A[i] = Integer.parseInt(strs[i - 1]);
-			update(i, A[i]);
-		}
 		
-		for (int m = 1; m <= M; m++) {			
+		T = Integer.parseInt(br.readLine());
+		
+		int tmp = 0;
+	
+		for (int tc = 0; tc < T; tc++) {
 			strs = br.readLine().split(" ");
-			int i = Integer.parseInt(strs[0]);
-			int j = Integer.parseInt(strs[1]);
+			N = Integer.parseInt(strs[0]);
+			M = Integer.parseInt(strs[1]);
 			
-			System.out.println(sum(j) - sum(i - 1));
+			tree = new long[M + N + 1];
+			pos = new int[N + 1];
+			
+			for (int i = 1; i <= N; i++) {
+				update(M + i, 1);
+				pos[i] = M + i;
+			}
+			
+//			System.out.println(Arrays.toString(tree));
+				
+			strs = br.readLine().split(" ");
+			
+			for (int m = 0; m < M; m++) {
+				tmp = Integer.parseInt(strs[m]);
+				
+				// System.out.println("tmp : " + tmp);
+				
+				// how many DVDs are on top of DVD which is picked up?
+				System.out.print(sum(pos[tmp] - 1) + " ");
+				
+				// move picked DVD to on top of stack (also update fenwick tree)
+				update(pos[tmp], -1);
+				pos[tmp] = M - m;
+				update(pos[tmp], 1);
+			}
+			
+			System.out.println();
 		}
 	}
 
@@ -49,7 +67,7 @@ public class Main {
 
 	static void update(int i, int val) {
 
-		for (int x = i; x <= N; x += (x & -x)) {
+		for (int x = i; x <= N + M; x += (x & -x)) {
 			tree[x] += val;
 		}
 	}
