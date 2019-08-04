@@ -3,72 +3,153 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-/* 3653번 영화 수집 */
+/* 5676번 음주 코딩 */
 
 public class Main {
 
-	static int T, N, M;
-	static long[] tree;
+	static int N, K;
+	static long[] treeZ;
+	static long[] treeM;
+	static int[] A;
 	static int[] pos;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] strs;
-		
-		T = Integer.parseInt(br.readLine());
-		
-		int tmp = 0;
-	
-		for (int tc = 0; tc < T; tc++) {
+
+		while (true) {
 			strs = br.readLine().split(" ");
+
+			N = 0;
+
+			if (strs == null || "".equals(strs[0])) {
+				return;
+			}
+
 			N = Integer.parseInt(strs[0]);
-			M = Integer.parseInt(strs[1]);
-			
-			tree = new long[M + N + 1];
+			K = Integer.parseInt(strs[1]);
+
+			treeZ = new long[N + 1];
+			treeM = new long[N + 1];
+			A = new int[N + 1];
 			pos = new int[N + 1];
-			
-			for (int i = 1; i <= N; i++) {
-				update(M + i, 1);
-				pos[i] = M + i;
-			}
-			
-//			System.out.println(Arrays.toString(tree));
-				
+
 			strs = br.readLine().split(" ");
 			
-			for (int m = 0; m < M; m++) {
-				tmp = Integer.parseInt(strs[m]);
-				
-				// System.out.println("tmp : " + tmp);
-				
-				// how many DVDs are on top of DVD which is picked up?
-				System.out.print(sum(pos[tmp] - 1) + " ");
-				
-				// move picked DVD to on top of stack (also update fenwick tree)
-				update(pos[tmp], -1);
-				pos[tmp] = M - m;
-				update(pos[tmp], 1);
+			int tmp = 0;
+
+			for (int n = 0; n < N; n++) {
+				tmp = Integer.parseInt(strs[n]);
+				if (tmp != 0) {
+					m_update(n + 1, tmp);
+					A[n + 1] = tmp;
+				} else {
+					A[n + 1] = -1;
+					zero_update(n + 1, 0);
+					A[n + 1] = 0;
+				}
 			}
-			
+
+			int i, j, v;
+
+			for (int k = 0; k < K; k++) {
+				strs = br.readLine().split(" ");
+				if ("C".equals(strs[0])) {
+					i = Integer.parseInt(strs[1]);
+					v = Integer.parseInt(strs[2]);
+
+					zero_update(i, v);
+					m_update(i, v);
+
+					A[i] = v;
+				} else {
+					i = Integer.parseInt(strs[1]);
+					j = Integer.parseInt(strs[2]);
+
+					
+					long tmp1 = zero_sum(j) - zero_sum(i - 1);
+//					System.out.println("tmp1 : " + tmp1);
+
+					if (tmp1 > 0) {
+						System.out.print(0);
+					} else {
+						long tmp2 = m_sum(j) - m_sum(i - 1);
+//						System.out.println("tmp2 : " + tmp2);
+
+						if (tmp2 % 2 == 0) {
+							System.out.print("+");
+						} else {
+							System.out.print("-");
+						}
+					}
+				}
+			}
+
 			System.out.println();
 		}
 	}
 
-	static long sum(int i) {
+	static long zero_sum(int i) {
 		long sum = 0;
 
 		for (int x = i; x > 0; x -= (x & -x)) {
-			sum += tree[x];
+			sum += treeZ[x];
+		}
+
+//		System.out.println("zero_sum(" + i + ") : " + sum);
+		return sum;
+	}
+
+	static void zero_update(int i, int val) {
+		int tmp = 1;
+
+		if (val != 0 && A[i] != 0) {
+			return;
+		}
+
+		if (val != 0 && A[i] == 0) {
+			tmp = -1;
+		}
+
+		for (int x = i; x <= N; x += (x & -x)) {
+			treeZ[x] += tmp;
+		}
+
+//		System.out.println(Arrays.toString(treeZ));
+	}
+
+	static long m_sum(int i) {
+		long sum = 0;
+
+		for (int x = i; x > 0; x -= (x & -x)) {
+			sum += treeM[x];
 		}
 
 		// System.out.println("sum(" + i + ", " + j + ") : " + sum);
 		return sum;
 	}
 
-	static void update(int i, int val) {
-
-		for (int x = i; x <= N + M; x += (x & -x)) {
-			tree[x] += val;
+	static void m_update(int i, int val) {
+		int tmp = 1;
+		
+//		System.out.println("m_update() => i : " + i + ", val : " + val + ", A[" + i + "] : " + A[i]);
+		
+		if (val >= 0 && A[i] >= 0) {
+			return;
 		}
+		
+		if (val >= 0 && A[i] < 0) {
+			tmp = -1;
+		}
+		
+		if (val < 0 && A[i] < 0) {
+			return;
+		}
+
+		for (int x = i; x <= N; x += (x & -x)) {
+			treeM[x] += tmp;
+		}
+		
+//		System.out.println(Arrays.toString(treeM));
 	}
 }
