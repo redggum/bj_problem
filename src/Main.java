@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 /* 2042번 구간 합 구하기 */
 
 public class Main {
@@ -20,15 +22,18 @@ public class Main {
 		M = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		
-		tree = new long[N + 1];
+		tree = new long[4 * N + 1];
 		arr = new int[N + 1];
 		int tmp;
 		
 		for (int i = 1; i <= N; i++) {
 			tmp = Integer.parseInt(br.readLine());
-			update(i, tmp);
 			arr[i] = tmp;
 		}
+		
+		init(1, 1, N);
+		
+//		System.out.println(Arrays.toString(tree));
 		
 		int a, b, c;
 		
@@ -41,39 +46,50 @@ public class Main {
 			
 			switch(a) {
 			case 1 :
-				update(b, c);
+				update(1, 1, N, b, c - arr[b]);
+				arr[b] = c;
 				break;
 			case 2 :
-				System.out.println(get(c) - get(b - 1));
+				System.out.println(sum(1, 1, N, b, c));
 				break;
 			}
 		}
 	}
 	
-	static void update(int node, int newVal) {
-		int tmp = node;
-		long gap = newVal - arr[tmp];
-		
-		while(tmp <= N) {
-			tree[tmp] += gap;
-//			System.out.println("gap : " + gap + ", tmp : " + tmp + ", tree[" + tmp + "] : " + tree[tmp]);
-			
-			tmp += tmp & -(tmp);
-			
+	static long init(int node, int s, int e) {
+//		System.out.println("node : " + node + ", s : " + s + ", e : " + e);
+		if (s == e) {
+//			System.out.println("last one - node : " + node + ", s : " + s);
+			return tree[node] = arr[s];
 		}
 		
-//		System.out.println(Arrays.toString(tree));
+		return tree[node] = init(node * 2, s, (s + e) / 2) + init(node * 2 + 1, (s + e) / 2 + 1, e);
 	}
 	
-	static long get(int node) {
-		int tmp = node;
-		long sum = 0;
-		
-		while(tmp > 0) {
-			sum += tree[tmp];
-			tmp -= tmp & -(tmp);
+	static void update(int node, int s, int e, int target, int newVal) {
+//		System.out.println("node : " + node + ", s : " + s + ", e : " + e + ", target : " + target + ", newVal : " + newVal);
+		if (target < s || target > e) {
+			return;
 		}
 		
-		return sum;
+		tree[node] += newVal;
+		
+		if (s != e) {
+			update(node * 2, s, (s + e) / 2, target, newVal);
+			update(node * 2 + 1, (s + e) / 2 + 1, e, target, newVal);
+		}
+	}
+	
+	static long sum(int node, int s, int e, int l, int r) {
+		
+		if (l > e || r < s) {
+			return 0;
+		}
+		
+		if (l <= s && r >= e) {
+			return tree[node];
+		}
+		
+		return sum(node * 2, s, (s + e) / 2, l, r) + sum(node * 2 + 1, (s + e) / 2 + 1, e, l, r);
 	}
 }	
