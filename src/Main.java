@@ -3,13 +3,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-/* 10868번 최솟값 */
+/* 1395번 스위치 */
 
 public class Main {
 
 	static int N, M;
-	static long[] treeA;
-	static long[] treeB;
+	static long[] tree;
 	static int[] arr;
 	
 	static final long INF = Long.MAX_VALUE;
@@ -21,8 +20,7 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		
-		treeA = new long[4 * N + 1];
-		treeB = new long[4 * N + 1];
+		tree = new long[4 * N + 1];
 		arr = new int[N + 1];
 		int tmp;
 		
@@ -49,50 +47,14 @@ public class Main {
 		}
 	}
 	
-	static long initA(int node, int s, int e) {
-		if (s == e) {
-			return treeA[node] = arr[s];
-		}
+	static long init(int node, int s, int e) {
+	}
+	
+	static long sum(int node, int s, int e, int l, int r) {
+	}
+	
+	static long update(int node, int s, int e, int v, int t) {
 		
-		return treeA[node] = min(initA(node * 2, s, (s + e) / 2), initA(node * 2 + 1, (s + e) / 2 + 1, e));
 	}
 	
-	static long initB(int node, int s, int e) {
-		if (s == e) {
-			return treeB[node] = arr[s];
-		}
-		
-		return treeB[node] = max(initB(node * 2, s, (s + e) / 2), initB(node * 2 + 1, (s + e) / 2 + 1, e));
-
-	}
-	
-	static long mA(int node, int s, int e, int l, int r) {
-		if (l > e || r < s) {
-			return INF;
-		} else if (l <= s && r >= e) {
-			return treeA[node];
-		}
-		
-		return min(mA(node * 2, s, (s + e) / 2, l, r), mA(node * 2 + 1, (s + e) / 2 + 1, e, l, r));
-	}
-	
-	static long mB(int node, int s, int e, int l, int r) {
-		if (l > e || r < s) {
-			return 0;
-		} else if (l <= s && r >= e) {
-			return treeB[node];
-		}
-		
-		return max(mB(node * 2, s, (s + e) / 2, l, r), mB(node * 2 + 1, (s + e) / 2 + 1, e, l, r));
-	}
-	
-	static long min(long a, long b) {
-		if (a > b) return b;
-		else return a;
-	}
-	
-	static long max(long a, long b) {
-		if (a > b) return a;
-		else return b;
-	}
 }	
