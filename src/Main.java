@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-/* 1395번 스위치 */
+/* 16404번 주식회사 승범이네 */
 
 public class Main {
 
