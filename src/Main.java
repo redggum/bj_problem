@@ -1,60 +1,98 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
-/* 16404번 주식회사 승범이네 */
+/* 1967번 트리의 지름 */
 
 public class Main {
 
 	static int N, M;
-	static long[] tree;
-	static int[] arr;
+	static ArrayList<Node>[] arr;
 	
 	static final long INF = Long.MAX_VALUE;
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+		String[] strs;
+		int a, b, c;
+		int[] dist;
+		Queue<Integer> q;
+		boolean[] visit;
+		ArrayList<Node> res;
 		
-		tree = new long[4 * N + 1];
-		arr = new int[N + 1];
-		int tmp;
+		N = Integer.parseInt(br.readLine());
 		
-		for (int i = 1; i <= N; i++) {
-			tmp = Integer.parseInt(br.readLine());
-			arr[i] = tmp;
+		arr = new ArrayList[N + 1];
+		
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = new ArrayList<>();
 		}
 		
-		initA(1, 1, N);
-		initB(1, 1, N);
+		dist = new int[N + 1];
+		q = new LinkedList<Integer>();
+		visit = new boolean[N + 1];
+		res = new ArrayList<>();
 		
-//		System.out.println(Arrays.toString(tree));
-		
-		int a, b;
-		
-		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(br.readLine());
-
-			a = Integer.parseInt(st.nextToken());
-			b = Integer.parseInt(st.nextToken());
+		for (int i = 1; i < N; i++) {
+			strs = br.readLine().split(" ");
+			a = Integer.parseInt(strs[0]);
+			b = Integer.parseInt(strs[1]);
+			c = Integer.parseInt(strs[2]);
 			
-			System.out.print(mA(1, 1, N, a, b) + " " + mB(1, 1, N, a, b));
-			System.out.println();
+			arr[a].add(new Node(b, c));
+			arr[b].add(new Node(a, c));			
 		}
-	}
-	
-	static long init(int node, int s, int e) {
-	}
-	
-	static long sum(int node, int s, int e, int l, int r) {
-	}
-	
-	static long update(int node, int s, int e, int v, int t) {
 		
+		q.offer(1);
+		visit[1] = true;
+		dist[1] = 0;
+		
+		while(!q.isEmpty()) {
+			int v = q.poll();
+			
+			res.add(new Node(v, dist[v]));
+			
+			
+			
+			visit[v] = true;
+			
+			System.out.println("v : " + v);
+			
+			for (int i = 0; i < arr[v].size(); i++) {
+				Node n = arr[v].get(i);
+				if (visit[n.v]) {
+					continue;
+				}
+				
+				dist[n.v] = dist[v] + n.e;
+				q.offer(n.v);
+			}
+		}
+		
+		res.sort(new Comparator<Node>() {
+			@Override
+			public int compare(Node o1, Node o2) {
+				return o2.e - o1.e;
+			}
+		});
+		
+		
+		System.out.println(res.get(0).e + res.get(1).e);
 	}
-	
 }	
+
+class Node {
+	int v;
+	int e;
+	
+	Node(int v, int e) {
+		this.v = v;
+		this.e = e;
+	}
+}
