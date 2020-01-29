@@ -8,19 +8,17 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		Scanner sc = new Scanner(System.in);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-//		String[] strs = br.readLine().split(" ");
-		String[] strs = sc.nextLine().split(" ");
+		String[] strs = br.readLine().split(" ");
 		
 		int a = Integer.parseInt(strs[0]);
 		int x = Integer.parseInt(strs[1]);
 		
-		int[] arr = new int[10];
+		int[] arr = new int[a + 1];
 		String str = "";
 		
-		strs = sc.nextLine().split(" ");
+		strs = br.readLine().split(" ");
 		
 		for (int i = 0; i < a; i++) {
 			arr[i] = Integer.parseInt(strs[i]);
