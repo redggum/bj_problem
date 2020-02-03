@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 11021번 A+B - 7 */
+/* 11022번 A+B - 8 */
 
 public class Main {
 
@@ -20,7 +20,7 @@ public class Main {
 			a = Integer.parseInt(strs[0]);
 			b = Integer.parseInt(strs[1]);
 
-			System.out.println("Case #" + i + ": " + (a + b));
+			System.out.println("Case #" + i + ": " + a + " + " + b + " = " + (a + b));
 		}
 	}
 }
