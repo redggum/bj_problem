@@ -3,31 +3,33 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-/* 2884번 알람 시계 */
+/* 1003번 피보나치 함수 */
 
 public class Main {
+	static int n0;
+	static int n1;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		String[] strs  = br.readLine().split(" ");
-		int H = Integer.parseInt(strs[0]);
-		int M = Integer.parseInt(strs[1]);
-		int mH = 0;
-		
-		if (M - 45 < 0) {
-			M = 60 - (45 - M);
-			mH = 1;
+
+		int T = Integer.parseInt(br.readLine());
+		int N;
+		int[][] D; 
+
+		for (int tc = 1; tc <= T; tc++) {
+			N = Integer.parseInt(br.readLine());
 			
-			if (H - 1 < 0) {
-				H = 23;
-			} else {
-				H -= mH;
+			D = new int[50][2];
+			
+			D[0][0] = 1;
+			D[1][1] = 1;
+			
+			for (int i = 2; i <= N; i++) {
+				D[i][1] = D[i-1][1] + D[i-2][1];
+				D[i][0] = D[i-1][0] + D[i-2][0];
 			}
-		} else {
-			M -= 45;
+			
+			System.out.println(D[N][0] + " " + D[N][1]);
 		}
-		
-		System.out.println(H + " " + M);
 	}
 }
