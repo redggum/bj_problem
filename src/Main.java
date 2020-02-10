@@ -1,36 +1,28 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
-/* 2562번 최대값 */
+/* 10872번 팩토리얼 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int n = 9;
-		
-		int[] notOrder = new int[n];
-		int[] order = new int[n];
-		
-		for (int i = 0; i < n; i++) {
-			int num = Integer.parseInt(br.readLine());
-			notOrder[i] = num;
-			order[i] = num;
+		int N = Integer.parseInt(br.readLine());
+
+		if (N == 0) {
+			System.out.println(1);
+		} else {
+			System.out.println(facto(N));
 		}
-		
-		Arrays.sort(order);
-		
-		int max = order[n - 1];
-		System.out.println(max);
-		
-		for (int i = 0; i < notOrder.length; i++) {
-			if (notOrder[i] == max) {
-				System.out.println(i + 1);
-				break;
-			}
+	}
+	
+	static long facto(int n) {
+		if (n == 1) {
+			return 1;
+		} else {
+			return n * facto(n - 1);
 		}
 	}
 }
