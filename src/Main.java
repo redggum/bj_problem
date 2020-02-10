@@ -5,32 +5,35 @@ import java.io.InputStreamReader;
 /* 11726번 2xn 타일링 */
 
 public class Main {
-	
+
 	final static int DIV = 10007;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int N = Integer.parseInt(br.readLine());
-		
-		// n = 1 -> 1
-		// n = 2 -> 2
-		// n = 3 -> n(2) + n(1)
-		// n = 4 -> n(3) + n(2)
-		// n = 5 -> n(4) + n(3)
-		// n = 6 -> n(5) + n(4)
-		// n = n -> n(n - 1) + n(n - 2)
-		
-		int[] sum = new int[N + 1];
-		
-		sum[1] = 1;
-		sum[2] = 2;
-		
-		for (int n = 3; n <= N; n++) {
-			sum[n] = ((sum[n - 1] % DIV) + (sum[n - 2] % DIV)) % DIV;
+
+		int n = Integer.parseInt(br.readLine());
+
+		long[] D = new long[n + 1];
+
+		if (n >= 3) {
+
+			D[1] = 1;
+			D[2] = 2;
+
+			for (int i = 3; i <= n; i++) {
+				D[i] = D[i - 1] + D[i - 2];
+				D[i] %= DIV;
+			}
+		} else {
+			if (n == 1) {
+				D[1] = 1;
+			}
+			if (n == 2) {
+				D[2] = 2;
+			}
 		}
+		
 
-		System.out.println(sum[N]);
+		System.out.println(D[n] % DIV);
 	}
-
 }
