@@ -1,15 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
-import java.util.StringTokenizer;
 
 /* 2751번 수 정렬하기 2 */
 
@@ -20,17 +11,31 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		N = Integer.parseInt(br.readLine());
-		
-		int[] arr = new int[N];
-		
+
+		int[] minus = new int[1000000 + 1];
+		int[] plus = new int[1000000 + 1];
+		int num = 0;
+
 		for (int i = 0; i < N; i++) {
-			arr[i] = Integer.parseInt(br.readLine());
+			num = Integer.parseInt(br.readLine());
+
+			if (num < 0) {
+				minus[Math.abs(num)] = 1;
+			} else {
+				plus[num] = 1;
+			}
+		}
+
+		for (int i = 1000000; i > 0; i--) {
+			if (minus[i] == 1) {
+				System.out.println(0 - i);
+			}
 		}
 		
-		Arrays.sort(arr);
-		
-		for (int i = 0; i < arr.length; i++) {
-			System.out.println(arr[i]);
+		for (int i = 0; i <= 1000000; i++) {
+			if (plus[i] == 1) {
+				System.out.println(i);
+			}
 		}
 	}
 }
