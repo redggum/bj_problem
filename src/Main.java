@@ -10,10 +10,10 @@ import java.util.Queue;
 
 public class Main {
 	static int T, M, N, K;
-	static ArrayList<Integer> arr;
+	static ArrayList<String> arr;
 	static int[] parent;
-	static boolean[] visited;
-	static boolean[] valid;
+	static boolean[][] visited;
+	static boolean[][] valid;
 	static int[] moveX = { 1, 0, -1, 0 };
 	static int[] moveY = { 0, 1, 0, -1 };
 
@@ -33,14 +33,10 @@ public class Main {
 			K = Integer.parseInt(strs[2]);
 
 			// init;
-			visited = new boolean[M * N + 1];
-			valid = new boolean[M * N + 1];
+			visited = new boolean[M][N];
+			valid = new boolean[M][N];
 
-			Arrays.fill(visited, false);
-
-			arr = new ArrayList<Integer>();
-
-			int xy;
+			arr = new ArrayList<String>();
 
 			for (int i = 0; i < K; i++) {
 				strs = br.readLine().split(" ");
@@ -48,71 +44,61 @@ public class Main {
 				x = Integer.parseInt(strs[0]);
 				y = Integer.parseInt(strs[1]);
 
-				xy = getXY(x, y);
-				arr.add(xy);
-				valid[xy] = true;
+				arr.add(x + ":" + y);
+				valid[x][y] = true;
 			}
 
 			int sum = 0;
 
 			for (int i = 0; i < K; i++) {
-				xy = arr.get(i);
+				String[] st = arr.get(i).split(":");
+				x = Integer.parseInt(st[0]);
+				y = Integer.parseInt(st[1]);
 
-				if (visited[xy] == true) {
+				if (visited[x][y] == true) {
 					continue;
 				}
 
 				sum++;				
-				System.out.println("xy : " + xy);
-				bfs(xy);
+				bfs(x, y);
 			}
 
 			System.out.println(sum);
 		}
 	}
 
-	static void bfs(int xy) {
-		Queue<Integer> q = new LinkedList<Integer>();
+	static void bfs(int x, int y) {
+		Queue<String> q = new LinkedList<String>();
 		int nextX, nextY;
-		int nextXy;
 
-		q.offer(xy);
-		visited[xy] = true;
+		q.offer(x + ":" + y);
+		visited[x][y] = true;
 
 		while (!q.isEmpty()) {
-			xy = q.poll();
+			String[] st = q.poll().split(":");
 
 			for (int j = 0; j < 4; j++) {
-				nextX = getX(xy) + moveX[j];
-				nextY = getY(xy) + moveY[j];
-				nextXy = getXY(nextX, nextY);
+				nextX = Integer.parseInt(st[0]) + moveX[j];
+				nextY = Integer.parseInt(st[1]) + moveY[j];
 
 //				if (nextX >= 0 && nextX < M && nextY >= 0 && nextY < N) {
 //					System.out.println("nextXy : " + nextXy + ", visited[nextXy] :" + visited[nextXy]
 //							+ ", valid[nextXy] :" + valid[nextXy]);
 //				}
 
-				if (nextX < 0 || nextX >= M || nextY < 0 || nextY >= N || visited[nextXy] || valid[nextXy] == false) {
+				if (nextX < 0 || nextX >= M || nextY < 0 || nextY >= N) {
+					continue;
+				}
+				
+				if (visited[nextX][nextY] || valid[nextX][nextY] == false) {
 					continue;
 				}
 
-				q.offer(nextXy);
-				visited[nextXy] = true;
+				q.offer(nextX + ":" + nextY);
+				visited[nextX][nextY] = true;
 
 //				System.out.println("nextX : " + nextX + ", nextY : " + nextY + ", nextXy : " + nextXy);
 			}
 		}
-	}
-
-	static int getXY(int x, int y) {
-		return y * M + x + 1;
-	}
-
-	static int getX(int xy) {
-		return xy % M - 1;
-	}
-
-	static int getY(int xy) {
-		return xy / M;
 	}
 }
