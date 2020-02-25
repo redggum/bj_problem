@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/* 9461번 파도반 수열 */
+/* 10953번 A+B - 6 */
 
 public class Main {
 
@@ -14,25 +14,15 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int T = Integer.parseInt(br.readLine());
-		int N;
-		long[] D;
-
-		D = new long[100 + 1];
-		
-		D[1] = 1;
-		D[2] = 1;
-		D[3] = 1;
-		D[4] = 2;
-		D[5] = 2;
-		
-		for (int n = 6; n <= 100; n++) {
-			D[n] = D[n - 1] + D[n - 5];
-		}
+		String[] strs;
+		int a, b;
 		
 		for (int tc = 1; tc <= T; tc++) {
-			N = Integer.parseInt(br.readLine());
+			strs = br.readLine().split(",");
+			a = Integer.parseInt(strs[0]);
+			b = Integer.parseInt(strs[1]);
 
-			System.out.println(D[N]);
+			System.out.println(a + b);
 		}
 	}
 }
