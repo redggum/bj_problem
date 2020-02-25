@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/* 10953번 A+B - 6 */
+/* 1934번 최소공배수 */
 
 public class Main {
 
@@ -18,11 +18,21 @@ public class Main {
 		int a, b;
 		
 		for (int tc = 1; tc <= T; tc++) {
-			strs = br.readLine().split(",");
+			strs = br.readLine().split(" ");
 			a = Integer.parseInt(strs[0]);
 			b = Integer.parseInt(strs[1]);
 
-			System.out.println(a + b);
+			System.out.println(a * b / gcd(a, b));
 		}
 	}
+	
+	static int gcd(int a, int b){
+		while(b != 0) {
+			int r = a % b;
+			a = b;
+			b = r;
+		}
+		return a;
+	}
+
 }
