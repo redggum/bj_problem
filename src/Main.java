@@ -2,38 +2,63 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/* 2775번 부녀회장이 될테야 */
+/* 2444번 별 찍기 - 7 */
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		int T, K, N;
+		int N;
+		String star;
+		int max;
+		int space;
+		int cnt;
 		
-		long[][] D;
 		
-		T = Integer.parseInt(br.readLine());
+		N = Integer.parseInt(br.readLine());
 		
-		for (int t = 1; t <= T; t++) {
-			K = Integer.parseInt(br.readLine());
-			N = Integer.parseInt(br.readLine());
+		max = (N * 2 - 1);
+		
+		
+		for (int i = 1; i <= N; i++) {
+			star = "";
+			cnt = i * 2 - 1;
+			space = (max - cnt) / 2;
 			
-			D = new long[K + 1][N + 1];
-			
-			for (int i = 1; i <= N; i++) {
-				D[0][i] = i;
+			for (int j = 1; j <= space; j++) {
+				star += " ";
 			}
 			
-			for (int k = 1; k <= K; k++) {
-				for (int n = 1; n <= N; n++) {
-					for (int m = 1; m <= n; m++) {
-						D[k][n] += D[k -1][m];
-					}
-				}
+			for (int j = 1; j <= cnt; j++) {
+				star += "*";
 			}
 			
-			System.out.println(D[K][N]);
+			for (int j = 1; j <= space; j++) {
+				star += " ";
+			}
+			
+			System.out.printf("%s\n", star);
+		}
+		
+		for (int i = N - 1; i >= 1; i--) {
+			star = "";
+			cnt = i * 2 - 1;
+			space = (max - cnt) / 2;
+			
+			for (int j = 1; j <= space; j++) {
+				star += " ";
+			}
+			
+			for (int j = cnt; j >= 1; j--) {
+				star += "*";
+			}
+			
+			for (int j = 1; j <= space; j++) {
+				star += " ";
+			}
+			
+			System.out.printf("%s\n", star);
 		}
 	}
 }
